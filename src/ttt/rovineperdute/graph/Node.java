@@ -31,6 +31,12 @@ public class Node {
         return city;
     }
 
+    public void addNode (Node n){
+        if(n != null) {
+            links.add(n);
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -28,4 +28,25 @@ public class City extends XMLElement {
     public City() {
         super("city");
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getH() {
+        return h;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

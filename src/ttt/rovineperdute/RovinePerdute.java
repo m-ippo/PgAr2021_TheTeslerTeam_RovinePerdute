@@ -5,6 +5,7 @@
  */
 package ttt.rovineperdute;
 
+import ttt.rovineperdute.graph.Node;
 import ttt.rovineperdute.io.ReadXML;
 
 import java.io.File;
@@ -16,8 +17,9 @@ import java.io.File;
 public class RovinePerdute {
 
     public static void main(String[] args) {
-        File f = new File("PgAr_Map_50.xml");
+        File f = new File("PgAr_Map_5.xml");
         ReadXML r = new ReadXML(f);
+        Node n = r.putCityInGraph();
         System.out.println("huiogfe");
     }
     

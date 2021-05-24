@@ -11,9 +11,13 @@ public class Link extends XMLElement {
 
     @Tag(Name = "to", ValueType = int.class)
     @EngineField(FieldType = FieldType.READ_AND_WRITE)
-    private int id_to; // ***provare con short***
+    private int id_to;                                                  // ***provare con short***
 
     public Link() {
         super("link");
+    }
+
+    public int getId(){
+        return id_to;
     }
 }
