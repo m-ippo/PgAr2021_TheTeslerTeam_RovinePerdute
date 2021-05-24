@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map size="50">
+	<city id="0" name="campo base" x="7016" y="2350" h="2766">
+		<link to="4"/>
+		<link to="5"/>
+		<link to="6"/>
+		<link to="7"/>
+	</city>
+	<city id="1" name="Guaia" x="8857" y="774" h="1395">
+		<link to="0"/>
+		<link to="5"/>
+		<link to="6"/>
+		<link to="7"/>
+	</city>
+	<city id="2" name="Quetzacoatl" x="6067" y="3283" h="1705">
+		<link to="0"/>
+		<link to="4"/>
+		<link to="7"/>
+		<link to="9"/>
+	</city>
+	<city id="3" name="Chiqua" x="4913" y="4189" h="3921">
+		<link to="1"/>
+		<link to="6"/>
+		<link to="7"/>
+		<link to="8"/>
+	</city>
+	<city id="4" name="Caracol" x="7300" y="279" h="2395">
+		<link to="0"/>
+		<link to="1"/>
+		<link to="6"/>
+	</city>
+	<city id="5" name="Guaia" x="9067" y="9179" h="171">
+		<link to="0"/>
+		<link to="9"/>
+		<link to="11"/>
+		<link to="12"/>
+	</city>
+	<city id="6" name="Rio" x="7627" y="8713" h="1944">
+		<link to="3"/>
+		<link to="7"/>
+		<link to="8"/>
+	</city>
+	<city id="7" name="Macondo" x="5517" y="4129" h="516">
+		<link to="5"/>
+		<link to="6"/>
+		<link to="11"/>
+	</city>
+	<city id="8" name="Qu'umarkaj" x="9931" y="5220" h="521">
+		<link to="4"/>
+		<link to="6"/>
+		<link to="7"/>
+		<link to="9"/>
+		<link to="10"/>
+		<link to="13"/>
+	</city>
+	<city id="9" name="Rio" x="2173" y="3342" h="4604">
+		<link to="2"/>
+		<link to="15"/>
+	</city>
+	<city id="10" name="Teotiguacan" x="5080" y="9128" h="1237">
+		<link to="2"/>
+		<link to="3"/>
+		<link to="5"/>
+		<link to="6"/>
+		<link to="15"/>
+		<link to="16"/>
+		<link to="17"/>
+	</city>
+	<city id="11" name="Guapalupa" x="967" y="5312" h="55">
+		<link to="7"/>
+		<link to="8"/>
+		<link to="9"/>
+	</city>
+	<city id="12" name="Guaia" x="7398" y="5469" h="4929">
+		<link to="11"/>
+		<link to="13"/>
+		<link to="15"/>
+		<link to="16"/>
+		<link to="18"/>
+	</city>
+	<city id="13" name="Mixco Vieio" x="3179" y="8715" h="2001">
+		<link to="9"/>
+		<link to="10"/>
+		<link to="15"/>
+		<link to="16"/>
+		<link to="18"/>
+	</city>
+	<city id="14" name="Guapalupa" x="2374" y="2470" h="4538">
+		<link to="6"/>
+		<link to="8"/>
+		<link to="17"/>
+	</city>
+	<city id="15" name="Kopa" x="9851" y="210" h="3801">
+		<link to="8"/>
+		<link to="9"/>
+		<link to="13"/>
+		<link to="17"/>
+		<link to="21"/>
+	</city>
+	<city id="16" name="Guaia" x="7903" y="8825" h="55">
+		<link to="9"/>
+		<link to="10"/>
+		<link to="11"/>
+		<link to="20"/>
+		<link to="21"/>
+	</city>
+	<city id="17" name="Qu'umarkaj" x="9805" y="665" h="512">
+		<link to="14"/>
+		<link to="16"/>
+		<link to="18"/>
+		<link to="23"/>
+	</city>
+	<city id="18" name="Tenochticlan" x="2846" y="8645" h="1227">
+		<link to="10"/>
+		<link to="12"/>
+		<link to="14"/>
+		<link to="15"/>
+		<link to="17"/>
+	</city>
+	<city id="19" name="Mixco Vieio" x="316" y="8903" h="2949">
+		<link to="11"/>
+		<link to="20"/>
+		<link to="22"/>
+		<link to="23"/>
+		<link to="24"/>
+		<link to="26"/>
+	</city>
+	<city id="20" name="Mixco Vieio" x="9203" y="4398" h="1489">
+		<link to="18"/>
+		<link to="19"/>
+		<link to="25"/>
+	</city>
+	<city id="21" name="Verolanuova" x="7977" y="4566" h="1416">
+		<link to="16"/>
+		<link to="22"/>
+		<link to="24"/>
+		<link to="27"/>
+	</city>
+	<city id="22" name="Mixco Vieio" x="6677" y="722" h="2827">
+		<link to="14"/>
+		<link to="16"/>
+		<link to="21"/>
+		<link to="26"/>
+		<link to="28"/>
+	</city>
+	<city id="23" name="Teotiguacan" x="9796" y="4202" h="4437">
+		<link to="18"/>
+		<link to="21"/>
+		<link to="22"/>
+		<link to="26"/>
+	</city>
+	<city id="24" name="Quirigua" x="932" y="4446" h="2526">
+		<link to="20"/>
+		<link to="23"/>
+		<link to="25"/>
+		<link to="30"/>
+	</city>
+	<city id="25" name="Guaia" x="7052" y="7184" h="4076">
+	</city>
+	<city id="26" name="Quirigua" x="9323" y="8671" h="4019">
+		<link to="18"/>
+		<link to="33"/>
+	</city>
+	<city id="27" name="Guapalupa" x="6975" y="545" h="671">
+		<link to="22"/>
+		<link to="26"/>
+		<link to="30"/>
+		<link to="31"/>
+		<link to="33"/>
+	</city>
+	<city id="28" name="Kopa" x="394" y="1267" h="274">
+		<link to="20"/>
+		<link to="34"/>
+	</city>
+	<city id="29" name="Macondo" x="9760" y="4352" h="1067">
+		<link to="21"/>
+		<link to="23"/>
+		<link to="24"/>
+		<link to="28"/>
+		<link to="33"/>
+		<link to="36"/>
+	</city>
+	<city id="30" name="Guaia" x="5927" y="640" h="4459">
+		<link to="22"/>
+		<link to="24"/>
+		<link to="29"/>
+		<link to="32"/>
+	</city>
+	<city id="31" name="Caracol" x="972" y="1696" h="684">
+		<link to="30"/>
+		<link to="34"/>
+		<link to="36"/>
+	</city>
+	<city id="32" name="Machu Picchu" x="6839" y="4111" h="3802">
+		<link to="25"/>
+		<link to="37"/>
+	</city>
+	<city id="33" name="Quetzacoatl" x="1879" y="9931" h="990">
+		<link to="28"/>
+		<link to="29"/>
+		<link to="30"/>
+		<link to="31"/>
+		<link to="34"/>
+		<link to="40"/>
+	</city>
+	<city id="34" name="Tenochticlan" x="6704" y="6770" h="3894">
+		<link to="26"/>
+		<link to="27"/>
+		<link to="30"/>
+		<link to="32"/>
+		<link to="35"/>
+		<link to="40"/>
+	</city>
+	<city id="35" name="Teotiguacan" x="2747" y="2225" h="224">
+		<link to="28"/>
+		<link to="31"/>
+		<link to="32"/>
+		<link to="34"/>
+		<link to="37"/>
+		<link to="38"/>
+		<link to="40"/>
+		<link to="42"/>
+	</city>
+	<city id="36" name="Tikal" x="9209" y="1147" h="1852">
+		<link to="29"/>
+		<link to="30"/>
+		<link to="38"/>
+		<link to="40"/>
+		<link to="43"/>
+	</city>
+	<city id="37" name="Rio" x="6637" y="1064" h="1449">
+		<link to="29"/>
+		<link to="33"/>
+		<link to="36"/>
+		<link to="38"/>
+		<link to="40"/>
+		<link to="41"/>
+		<link to="43"/>
+	</city>
+	<city id="38" name="Quetzacoatl" x="8304" y="555" h="3083">
+		<link to="37"/>
+		<link to="40"/>
+		<link to="42"/>
+		<link to="44"/>
+	</city>
+	<city id="39" name="Macondo" x="3746" y="7778" h="3256">
+		<link to="31"/>
+		<link to="33"/>
+		<link to="35"/>
+		<link to="36"/>
+		<link to="37"/>
+		<link to="44"/>
+	</city>
+	<city id="40" name="Qu'umarkaj" x="2367" y="1462" h="2589">
+		<link to="33"/>
+		<link to="36"/>
+		<link to="38"/>
+		<link to="42"/>
+		<link to="43"/>
+	</city>
+	<city id="41" name="Cusco" x="8833" y="4714" h="4717">
+		<link to="34"/>
+		<link to="37"/>
+		<link to="39"/>
+		<link to="46"/>
+		<link to="47"/>
+		<link to="48"/>
+	</city>
+	<city id="42" name="Quetzacoatl" x="6149" y="2731" h="3013">
+		<link to="34"/>
+		<link to="35"/>
+		<link to="40"/>
+		<link to="47"/>
+	</city>
+	<city id="43" name="Qu'umarkaj" x="6760" y="9140" h="2403">
+		<link to="35"/>
+		<link to="37"/>
+		<link to="41"/>
+		<link to="42"/>
+	</city>
+	<city id="44" name="Mixco Vieio" x="6798" y="2097" h="2911">
+		<link to="39"/>
+		<link to="48"/>
+		<link to="49"/>
+	</city>
+	<city id="45" name="Teotiguacan" x="3695" y="497" h="3565">
+		<link to="38"/>
+		<link to="39"/>
+		<link to="43"/>
+		<link to="44"/>
+		<link to="47"/>
+		<link to="49"/>
+	</city>
+	<city id="46" name="Cusco" x="2753" y="2711" h="4920">
+		<link to="47"/>
+		<link to="49"/>
+	</city>
+	<city id="47" name="Qu'umarkaj" x="4017" y="5084" h="800">
+		<link to="42"/>
+		<link to="44"/>
+		<link to="48"/>
+	</city>
+	<city id="48" name="Guapalupa" x="6788" y="5127" h="4809">
+		<link to="44"/>
+		<link to="45"/>
+		<link to="47"/>
+	</city>
+	<city id="49" name="Rovine Perdute" x="5884" y="5456" h="2399">
+		<link to="42"/>
+	</city>
+</map>

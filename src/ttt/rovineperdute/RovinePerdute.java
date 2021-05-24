@@ -5,17 +5,20 @@
  */
 package ttt.rovineperdute;
 
+import ttt.rovineperdute.io.ReadXML;
+
+import java.io.File;
+
 /**
  *
  * @author gabri
  */
 public class RovinePerdute {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
+        File f = new File("PgAr_Map_50.xml");
+        ReadXML r = new ReadXML(f);
+        System.out.println("huiogfe");
     }
     
 }
