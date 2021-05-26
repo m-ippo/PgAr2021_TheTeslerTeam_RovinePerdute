@@ -1,8 +1,12 @@
 package ttt.rovineperdute.trackresearch;
 
 import ttt.rovineperdute.graph.Node;
+import ttt.rovineperdute.io.ReadXML;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 public class TrackFinder {
@@ -10,43 +14,87 @@ public class TrackFinder {
     private final Node start_node;
     private final HashMap<Node, Double> valori;
     private final LinkedList<Node> da_collegare;
-    private final LinkedList<Node> precedenti;
-
-    public TrackFinder(Node node) {
-        this.start_node = node;
+    private final LinkedHashMap<Node, Node> precedenti;
+    private final ReadXML reader;
+    public TrackFinder(Node start_node, ReadXML reader) {
+        this.start_node = start_node;
         da_collegare = new LinkedList<>();
         valori = new HashMap<>();
-        precedenti = new LinkedList<>();
+        precedenti = new LinkedHashMap<>();
+        this.reader = reader;
         init();
     }
 
     private void init() {
-        for (Node n : start_node.getLinks()) {
-            valori.put(n, -1.0); // -1 perchè non possono essere negativi
+        for(Node n : reader.getNodes().values()){
             da_collegare.add(n);
+            valori.put(n, -1.0); // -1 perchè non possono essere negativi
+            precedenti.put(n, null);
+        }
+        da_collegare.remove(start_node);
+        valori.put(start_node, Double.NEGATIVE_INFINITY);
+    }
+
+    public void findBestTrack() {
+        Node attuale = start_node;
+        while(!da_collegare.isEmpty()){
+            Node piu_vicino = null;
+            Double min = Double.POSITIVE_INFINITY;
+            for(Node n : attuale.getLinks()) {
+                if (da_collegare.contains(n)) {
+                    double dist = calcDist(n, attuale);
+                    if (dist < min) {
+                        min = dist;
+                        piu_vicino = n;
+                    }
+                }
+            }
+            if(piu_vicino == null){
+                break;
+            }
+            piu_vicino.removeNode(attuale);
+
+            double fino_ad_ora = min + getTotalDistance(attuale);
+            valori.put(piu_vicino, fino_ad_ora);
+            precedenti.put(piu_vicino, attuale);
+            attuale.addDijkstraNode(piu_vicino);
+
+            double dist;
+            for(Node n : piu_vicino.getLinks()) {
+                if (da_collegare.contains(n)) {
+                    dist = fino_ad_ora + calcDist(piu_vicino, n);
+                    double valore_attuale = valori.get(n);
+                    boolean isAlreadyLinked = valore_attuale != -1;
+                    if (!isAlreadyLinked || dist < valore_attuale) {
+                        valori.put(n, dist);
+                        if (isAlreadyLinked) {
+                            Node node = precedenti.get(n);
+                            node.removeDijkstraNode(n);
+                        }
+                        piu_vicino.addDijkstraNode(n);
+                        precedenti.put(n, piu_vicino);
+                    }
+                }
+            }
+            da_collegare.remove(attuale);
+            attuale = piu_vicino;
         }
     }
 
-    public Node findBestTrack() {
-        Node n = new Node(start_node.getCity());
-        valori.put(n, 0.0);
-        precedenti.add(start_node);
-        da_collegare.remove(start_node);
-
-        double distanza = 0;
-        
-        while (da_collegare.size() > 0) {
-            Node nuovo = findNearestNode(n);
-            da_collegare.remove(nuovo);
-            if (valori.get(nuovo) == -1) {
-                break;
-            }
-            for (Node node : nuovo.getLinks()) {
-                
+    private double getTotalDistance(Node n){
+        Node precedente = precedenti.get(n);
+        double dist = 0;
+        long contatore = 0;
+        while (precedente != null){
+            dist += calcDist(precedente, n);
+            n = precedente;
+            precedente = precedenti.get(precedente);
+            contatore++;
+            if(contatore > 10000){
+                System.out.println("uoegrt");
             }
         }
-
-        return n;
+        return dist;
     }
 
     private Node findNearestNode(Node to) {

@@ -3,7 +3,6 @@ package ttt.rovineperdute.io;
 import ttt.rovineperdute.graph.Node;
 import ttt.rovineperdute.io.elements.City;
 import ttt.rovineperdute.io.elements.Link;
-import ttt.rovineperdute.io.elements.Map;
 import ttt.utils.console.output.GeneralFormatter;
 import ttt.utils.xml.document.XMLDocument;
 import ttt.utils.xml.engine.XMLEngine;
@@ -11,8 +10,10 @@ import ttt.utils.xml.engine.interfaces.IXMLElement;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ReadXML {
 
@@ -31,7 +32,7 @@ public class ReadXML {
 
     private void readDocument() {
         try { // lettura xml
-            XMLEngine engine = new XMLEngine(file, Map.class, City.class, Link.class);
+            XMLEngine engine = new XMLEngine(file, ttt.rovineperdute.io.elements.Map.class, City.class, Link.class);
             engine.morph(doc);
             city = doc.getRoot().getElements();
         } catch (IOException e) {
@@ -70,6 +71,10 @@ public class ReadXML {
 
     public static Node getEnd() {
         return end;
+    }
+
+    public Map<Integer,Node> getNodes(){
+        return Collections.unmodifiableMap(gia_letti);
     }
 
 }

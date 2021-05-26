@@ -8,6 +8,7 @@ public class Node {
 
     private final LinkedList<Node> links = new LinkedList<>();
     private City city;
+    private LinkedList<Node> dijkstra = new LinkedList<>();
 
     public Node(City city) {
         this.city = city;
@@ -37,6 +38,10 @@ public class Node {
         }
     }
 
+    public void removeNode(Node n){
+        links.remove(n);
+    }
+
     public LinkedList<Node> getLinks() {
         return links;
     }
@@ -51,6 +56,18 @@ public class Node {
             }
         }
         return Optional.empty();
+    }
+
+    public void addDijkstraNode(Node n){
+        dijkstra.add(n);
+    }
+
+    public void removeDijkstraNode(Node n){
+        dijkstra.remove(n);
+    }
+
+    public LinkedList<Node> getDijkstra(){
+        return dijkstra;
     }
 
     @Override
