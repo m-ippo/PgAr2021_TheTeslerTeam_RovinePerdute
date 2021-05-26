@@ -59,4 +59,11 @@ public class ReadXML {
             }
         }
     }
+
+    public XMLDocument getDocument(){
+        if(doc != null){
+            return doc;
+        }
+        return null;
+    }
 }

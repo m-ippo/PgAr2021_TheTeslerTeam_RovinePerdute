@@ -37,6 +37,10 @@ public class Node {
         }
     }
 
+    public LinkedList<Node> getLinks(){
+        return links;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

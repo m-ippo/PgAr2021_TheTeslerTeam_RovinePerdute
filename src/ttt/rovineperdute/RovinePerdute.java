@@ -11,12 +11,12 @@ import ttt.rovineperdute.io.ReadXML;
 import java.io.File;
 
 /**
- *
- * @author gabri
+ * @author TTT
  */
 public class RovinePerdute {
 
     public static void main(String[] args) {
+
         File f = new File("PgAr_Map_5.xml");
         ReadXML r = new ReadXML(f);
         Node n = r.putCityInGraph();
