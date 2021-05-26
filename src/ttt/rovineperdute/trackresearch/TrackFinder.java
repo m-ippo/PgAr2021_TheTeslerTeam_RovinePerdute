@@ -3,19 +3,20 @@ package ttt.rovineperdute.trackresearch;
 import ttt.rovineperdute.graph.Node;
 import ttt.rovineperdute.io.ReadXML;
 
-import java.io.File;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 public class TrackFinder {
+
+    private final static double THRESHOLD = 0.00001;
 
     private final Node start_node;
     private final HashMap<Node, Double> valori;
     private final LinkedList<Node> da_collegare;
     private final LinkedHashMap<Node, Node> precedenti;
     private final ReadXML reader;
+
     public TrackFinder(Node start_node, ReadXML reader) {
         this.start_node = start_node;
         da_collegare = new LinkedList<>();
@@ -26,7 +27,7 @@ public class TrackFinder {
     }
 
     private void init() {
-        for(Node n : reader.getNodes().values()){
+        for (Node n : reader.getNodes().values()) {
             da_collegare.add(n);
             valori.put(n, -1.0); // -1 perchè non possono essere negativi
             precedenti.put(n, null);
@@ -37,10 +38,10 @@ public class TrackFinder {
 
     public void findBestTrack() {
         Node attuale = start_node;
-        while(!da_collegare.isEmpty()){
+        while (!da_collegare.isEmpty()) {
             Node piu_vicino = null;
             Double min = Double.POSITIVE_INFINITY;
-            for(Node n : attuale.getLinks()) {
+            for (Node n : attuale.getLinks()) {
                 if (da_collegare.contains(n)) {
                     double dist = calcDist(n, attuale);
                     if (dist < min) {
@@ -49,7 +50,7 @@ public class TrackFinder {
                     }
                 }
             }
-            if(piu_vicino == null){
+            if (piu_vicino == null) {
                 break;
             }
             piu_vicino.removeNode(attuale);
@@ -58,39 +59,48 @@ public class TrackFinder {
             valori.put(piu_vicino, fino_ad_ora);
             precedenti.put(piu_vicino, attuale);
             attuale.addDijkstraNode(piu_vicino);
+            da_collegare.remove(piu_vicino);
+            attuale = piu_vicino;
 
-            double dist;
-            for(Node n : piu_vicino.getLinks()) {
+            /*double dist;
+            for (Node n : piu_vicino.getLinks()) {
                 if (da_collegare.contains(n)) {
                     dist = fino_ad_ora + calcDist(piu_vicino, n);
                     double valore_attuale = valori.get(n);
                     boolean isAlreadyLinked = valore_attuale != -1;
-                    if (!isAlreadyLinked || dist < valore_attuale) {
+                    if (!isAlreadyLinked) {
                         valori.put(n, dist);
-                        if (isAlreadyLinked) {
-                            Node node = precedenti.get(n);
-                            node.removeDijkstraNode(n);
-                        }
+                        piu_vicino.addDijkstraNode(n);
+                        precedenti.put(n, piu_vicino);
+                    } else if (Math.abs(dist - valore_attuale) < THRESHOLD) {
+                        valori.put(n, dist);
+                        Node node = precedenti.get(n);
+                        node.removeDijkstraNode(n);
+                        //removeFromAll(n);
                         piu_vicino.addDijkstraNode(n);
                         precedenti.put(n, piu_vicino);
                     }
                 }
-            }
-            da_collegare.remove(attuale);
-            attuale = piu_vicino;
+            }*/
         }
     }
 
-    private double getTotalDistance(Node n){
+    private void removeFromAll(Node d) {
+        for (Node n : reader.getNodes().values()) {
+            n.removeDijkstraNode(d);
+        }
+    }
+
+    private double getTotalDistance(Node n) {
         Node precedente = precedenti.get(n);
         double dist = 0;
         long contatore = 0;
-        while (precedente != null){
+        while (precedente != null) {
             dist += calcDist(precedente, n);
             n = precedente;
             precedente = precedenti.get(precedente);
             contatore++;
-            if(contatore > 10000){
+            if (contatore > 10000) {
                 System.out.println("uoegrt");
             }
         }
