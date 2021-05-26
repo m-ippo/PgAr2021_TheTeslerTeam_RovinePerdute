@@ -31,20 +31,32 @@ public class Node {
         return city;
     }
 
-    public void addNode (Node n){
-        if(n != null) {
+    public void addNode(Node n) {
+        if (n != null) {
             links.add(n);
         }
     }
 
-    public LinkedList<Node> getLinks(){
+    public LinkedList<Node> getLinks() {
         return links;
+    }
+
+    public Optional<Node> lookupNode(Node parent, int id) {
+        for (Node n : links) {
+            if (n != parent) {
+                Optional<Node> lookupNode = lookupNode(this, id);
+                if (lookupNode.isPresent()) {
+                    return lookupNode;
+                }
+            }
+        }
+        return Optional.empty();
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Node[").append(city.getName()).append("]");
+        sb.append("Node[").append(city.getName()).append(",ID:").append(city.getId()).append("]");
         return sb.toString();
     }
 }

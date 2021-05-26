@@ -9,7 +9,6 @@ import ttt.utils.xml.document.XMLDocument;
 import ttt.utils.xml.engine.XMLEngine;
 import ttt.utils.xml.engine.interfaces.IXMLElement;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -22,35 +21,37 @@ public class ReadXML {
     private HashMap<Integer, Node> gia_letti = new HashMap<>();
     private List<IXMLElement> city;
 
-    public ReadXML(File file){
+    private static Node end;
+
+    public ReadXML(File file) {
         this.file = file;
         doc = new XMLDocument(null);
         readDocument();
     }
 
-    private void readDocument(){
+    private void readDocument() {
         try { // lettura xml
             XMLEngine engine = new XMLEngine(file, Map.class, City.class, Link.class);
             engine.morph(doc);
             city = doc.getRoot().getElements();
         } catch (IOException e) {
             GeneralFormatter.printOut("Non è stato possibile leggere il file...", true, true);
-            e.printStackTrace();
         }
     }
 
-    public Node putCityInGraph(){
+    public Node putCityInGraph() {
         City campo_base = (City) city.get(0);
+        end = new Node((City) city.get(city.size() - 1));
         Node first = new Node(campo_base);
         generateNode(first);
         return first;
     }
 
-    private void generateNode(Node n){
+    private void generateNode(Node n) {
         gia_letti.put(n.getCity().getId(), n);
-        for(IXMLElement e : n.getCity().getElements()){
+        for (IXMLElement e : n.getCity().getElements()) {
             Link l = (Link) e;
-            if(gia_letti.containsKey(l.getId())){
+            if (gia_letti.containsKey(l.getId())) {
                 n.addNode(gia_letti.get(l.getId()));
             } else {
                 Node m = new Node((City) city.get(l.getId()));
@@ -60,10 +61,15 @@ public class ReadXML {
         }
     }
 
-    public XMLDocument getDocument(){
-        if(doc != null){
+    public XMLDocument getDocument() {
+        if (doc != null) {
             return doc;
         }
         return null;
     }
+
+    public static Node getEnd() {
+        return end;
+    }
+
 }
