@@ -1,6 +1,6 @@
 package ttt.rovineperdute.io;
 
-import ttt.rovineperdute.graph.Node;
+import ttt.rovineperdute.contents.graph.Node;
 import ttt.rovineperdute.io.elements.City;
 import ttt.rovineperdute.io.elements.Link;
 import ttt.utils.console.output.GeneralFormatter;
@@ -19,7 +19,7 @@ public class ReadXML {
 
     private XMLDocument doc;
     private File file;
-    private HashMap<Integer, Node> gia_letti = new HashMap<>();
+    private final HashMap<Integer, Node> gia_letti = new HashMap<>();
     private List<IXMLElement> city;
 
     private static Node end;
@@ -50,7 +50,7 @@ public class ReadXML {
 
     private void generateNode(Node n) {
         gia_letti.put(n.getCity().getId(), n);
-        for (IXMLElement e : n.getCity().getElements()) {
+        n.getCity().getElements().stream().forEachOrdered(e -> {
             Link l = (Link) e;
             if (gia_letti.containsKey(l.getId())) {
                 n.addNode(gia_letti.get(l.getId()));
@@ -59,7 +59,18 @@ public class ReadXML {
                 generateNode(m);
                 n.addNode(m);
             }
-        }
+        });
+        /*for (IXMLElement e : n.getCity().getElements()) {
+            Link l = (Link) e;
+            if (gia_letti.containsKey(l.getId())) {
+                n.addNode(gia_letti.get(l.getId()));
+            } else {
+                Node m = new Node((City) city.get(l.getId()));
+                generateNode(m);
+                n.addNode(m);
+            }
+        }*/
+        //n.computeCalcs();
     }
 
     public XMLDocument getDocument() {
@@ -73,7 +84,7 @@ public class ReadXML {
         return end;
     }
 
-    public Map<Integer,Node> getNodes(){
+    public Map<Integer, Node> getNodes() {
         return Collections.unmodifiableMap(gia_letti);
     }
 
