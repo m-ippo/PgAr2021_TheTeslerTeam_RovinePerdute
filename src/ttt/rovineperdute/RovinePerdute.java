@@ -28,7 +28,7 @@ public class RovinePerdute {
         //   se si va a ritroso dai precedenti esce giusto
         //////////////////////////////////////////////////////////////////////////
 
-        File f = new File("PgAr_Map_5.xml");
+        File f = new File("PgAr_Map_10000.xml");
         ReadXML r = new ReadXML(f);
         Node n = r.putCityInGraph();
         //Node trovato = findNode(n, 35);
