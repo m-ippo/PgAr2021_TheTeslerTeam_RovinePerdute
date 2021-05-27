@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map size="13">
+	<city id="0" name="campo base" x="0" y="0" h="0">
+		<link to="1"/>
+		<link to="2"/>
+		<link to="6"/>
+	</city>
+	<city id="1" name="Cusco" x="0" y="3" h="2">
+		<link to="0"/>
+		<link to="2"/>
+		<link to="3"/>
+	</city>
+	<city id="2" name="Quito" x="2" y="1" h="8">
+		<link to="3"/>
+		<link to="4"/>
+		<link to="6"/>
+	</city>
+	<city id="3" name="Ollantaytambo" x="2" y="6" h="5">
+		<link to="1"/>
+		<link to="2"/>
+		<link to="4"/>
+		<link to="9"/>
+		<link to="11"/>
+	</city>
+	<city id="4" name="Ecatepec" x="3" y="4" h="14">
+		<link to="1"/>
+		<link to="5"/>
+		<link to="8"/>
+	</city>
+	<city id="5" name="Otompan" x="5" y="2" h="9">
+		<link to="2"/>
+		<link to="7"/>
+		<link to="8"/>
+	</city>
+	<city id="6" name="Tenochtitlan" x="7" y="1" h="1">
+		<link to="0"/>
+		<link to="2"/>
+		<link to="7"/>
+		<link to="10"/>
+	</city>
+	<city id="7" name="Tikal" x="8" y="4" h="2">
+		<link to="6"/>
+		<link to="8"/>
+	</city>
+	<city id="8" name="Macondo" x="6" y="6" h="6">
+		<link to="3"/>
+		<link to="4"/>
+		<link to="5"/>
+		<link to="7"/>
+		<link to="9"/>
+		<link to="10"/>
+		<link to="11"/>
+	</city>
+	<city id="9" name="Machu Picchu" x="4" y="8" h="23">
+		<link to="3"/>
+		<link to="8"/>
+		<link to="10"/>
+		<link to="12"/>
+	</city>
+	<city id="10" name="Quirigua" x="9" y="7" h="12">
+		<link to="6"/>
+		<link to="7"/>
+		<link to="8"/>
+		<link to="9"/>
+		<link to="12"/>
+	</city>
+	<city id="11" name="Guacapulco" x="5" y="10" h="13">
+		<link to="3"/>
+		<link to="8"/>
+		<link to="12"/>
+	</city>
+	<city id="12" name="Rovine Perdute" x="7" y="10" h="20">
+		<link to="8"/>
+	</city>
+</map>

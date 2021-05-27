@@ -16,9 +16,11 @@
 package ttt.rovineperdute.contents.waterfall;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import ttt.rovineperdute.contents.graph.Node;
+import ttt.rovineperdute.trackresearch.TrackFinder;
 
 /**
  *
@@ -62,6 +64,38 @@ public class GraphPath {
 
     public boolean isDeadEnd() {
         return dead_end;
+    }
+
+    Double cost = Double.POSITIVE_INFINITY;
+
+    public Double compute() {
+        if (cost != Double.POSITIVE_INFINITY) {
+            return cost;
+        }
+        Iterator<Node> iterator = path.iterator();
+        if (iterator.hasNext()) {
+            Node previous = iterator.next();
+            if (iterator.hasNext()) {
+                Node current = iterator.next();
+                cost = TrackFinder.calcDist(previous, current);
+                while (iterator.hasNext()) {
+                    previous = current;
+                    current = iterator.next();
+                    cost += TrackFinder.calcDist(previous, current);
+                }
+                return cost;
+            }
+        }
+        return Double.POSITIVE_INFINITY;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        path.stream().forEachOrdered(l -> {
+            sb.append("\n>").append(l);
+        });
+        return sb.toString();
     }
 
 }

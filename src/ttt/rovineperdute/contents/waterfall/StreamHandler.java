@@ -24,54 +24,58 @@ import ttt.rovineperdute.contents.graph.Node;
  * @author gabri
  */
 public class StreamHandler {
-    
-    private final ArrayList<StreamElement> crawlers = new ArrayList<>();
+
+    private volatile ArrayList<StreamElement> crawlers = new ArrayList<>();
     private volatile ArrayList<Thread> threads = new ArrayList<>();
-    
+
     private final Node start;
     private final Node end;
-    
-    public StreamHandler(Node start,Node end) {
+
+    public StreamHandler(Node start, Node end) {
         this.start = start;
         this.end = end;
         init();
     }
-    
+
     private void init() {
         addCrawler(new GraphPath(), start);
     }
-    
+
     public ArrayList<StreamElement> getCrawlers() {
         return crawlers;
     }
-    
-    public void addCrawler(GraphPath gp, Node option) {
+
+    public synchronized void addCrawler(GraphPath gp, Node option) {
         StreamElement sm = new StreamElement(gp, option, this);
         crawlers.add(sm);
         sm.startFall();
     }
-    
+
     public synchronized void addService(Thread t) {
         threads.add(t);
     }
-    
+
     public synchronized void removeService(Thread t) {
         threads.remove(t);
     }
-    
+
     public boolean finished() {
         return threads.isEmpty();
     }
-    
+
     public void cleanup() {
         Iterator<StreamElement> iterator = crawlers.iterator();
         while (iterator.hasNext()) {
             StreamElement next = iterator.next();
             GraphPath finale = next.getFinale();
-            if(!finale.contains(end)){
+            if (!finale.contains(end)) {
                 iterator.remove();
             }
         }
     }
-    
+
+    public synchronized void removeCrawler(StreamElement to_remove) {
+        crawlers.remove(to_remove);
+    }
+
 }

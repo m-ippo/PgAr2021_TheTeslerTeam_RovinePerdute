@@ -1,24 +1,30 @@
 package ttt.rovineperdute.trackresearch;
 
+import java.util.ArrayList;
 import ttt.rovineperdute.contents.graph.Node;
 import ttt.rovineperdute.io.ReadXML;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Stack;
+import ttt.rovineperdute.contents.waterfall.GraphPath;
 
 public class TrackFinder {
 
     private final static double THRESHOLD = 0.00001;
 
     private final Node start_node;
+    private final Node end_node;
     private final HashMap<Node, Double> valori;
     private final LinkedList<Node> da_collegare;
     private final LinkedHashMap<Node, Node> precedenti;
     private final ReadXML reader;
 
-    public TrackFinder(Node start_node, ReadXML reader) {
+    public TrackFinder(Node start_node, Node end_node, ReadXML reader) {
         this.start_node = start_node;
+        this.end_node = end_node;
         da_collegare = new LinkedList<>();
         valori = new HashMap<>();
         precedenti = new LinkedHashMap<>();
@@ -29,18 +35,24 @@ public class TrackFinder {
     private void init() {
         for (Node n : reader.getNodes().values()) {
             da_collegare.add(n);
-            valori.put(n, -1.0); // -1 perchè non possono essere negativi
+            valori.put(n, Double.MAX_VALUE); // -1 perchè non possono essere negativi
             precedenti.put(n, null);
         }
         da_collegare.remove(start_node);
-        valori.put(start_node, Double.NEGATIVE_INFINITY);
+//        end_node.getLinks().clear();
+        valori.put(start_node, Double.MIN_VALUE);
     }
 
-    public void findBestTrack() {
+    public Stack<GraphPath> findBestTrack() {
         Node attuale = start_node;
+
+        Stack<GraphPath> backups = new Stack<>();
+        Stack<GraphPath> ends = new Stack<>();
+        GraphPath current_path = new GraphPath().addNode(start_node);
+        backups.push(current_path);
         while (!da_collegare.isEmpty()) {
             Node piu_vicino = null;
-            Double min = Double.POSITIVE_INFINITY;
+            Double min = Double.MAX_VALUE;
             for (Node n : attuale.getLinks()) {
                 if (da_collegare.contains(n)) {
                     double dist = calcDist(n, attuale);
@@ -50,16 +62,24 @@ public class TrackFinder {
                     }
                 }
             }
+            da_collegare.remove(piu_vicino);
             if (piu_vicino == null) {
-                break;
+                if (current_path.contains(end_node)) {
+                    ends.push(current_path);
+                }
+                current_path = backups.pop();
+                attuale = current_path.getPath().getLast();
+                continue;
             }
             piu_vicino.removeNode(attuale);
 
             double fino_ad_ora = min + getTotalDistance(attuale);
             valori.put(piu_vicino, fino_ad_ora);
             precedenti.put(piu_vicino, attuale);
-            attuale.addDijkstraNode(piu_vicino);
-            da_collegare.remove(piu_vicino);
+
+            //attuale.addDijkstraNode(piu_vicino);
+            backups.push(current_path.split());
+            current_path.addNode(piu_vicino);
             attuale = piu_vicino;
 
             /*double dist;
@@ -70,19 +90,20 @@ public class TrackFinder {
                     boolean isAlreadyLinked = valore_attuale != -1;
                     if (!isAlreadyLinked) {
                         valori.put(n, dist);
-                        piu_vicino.addDijkstraNode(n);
+                        //piu_vicino.addDijkstraNode(n);
                         precedenti.put(n, piu_vicino);
                     } else if (Math.abs(dist - valore_attuale) < THRESHOLD) {
                         valori.put(n, dist);
-                        Node node = precedenti.get(n);
-                        node.removeDijkstraNode(n);
+                        //Node node = precedenti.get(n);
+                        //node.removeDijkstraNode(n);
                         //removeFromAll(n);
-                        piu_vicino.addDijkstraNode(n);
+                        //piu_vicino.addDijkstraNode(n);
                         precedenti.put(n, piu_vicino);
                     }
                 }
             }*/
         }
+        return ends;
     }
 
     private void removeFromAll(Node d) {
@@ -91,18 +112,19 @@ public class TrackFinder {
         }
     }
 
+    private long countLeftBack(Node n) {
+        return da_collegare.stream().filter((t) -> {
+            return n.getLinks().contains(t);
+        }).count();
+    }
+
     private double getTotalDistance(Node n) {
         Node precedente = precedenti.get(n);
         double dist = 0;
-        long contatore = 0;
         while (precedente != null) {
             dist += calcDist(precedente, n);
             n = precedente;
             precedente = precedenti.get(precedente);
-            contatore++;
-            if (contatore > 10000) {
-                System.out.println("uoegrt");
-            }
         }
         return dist;
     }
@@ -123,7 +145,7 @@ public class TrackFinder {
         return to_ret;
     }
 
-    private double calcDist(Node to, Node from) {
+    public static double calcDist(Node to, Node from) {
         return Math.sqrt(Math.pow(from.getCity().getX() - to.getCity().getX(), 2) + Math.pow(from.getCity().getY() - to.getCity().getY(), 2));
     }
 

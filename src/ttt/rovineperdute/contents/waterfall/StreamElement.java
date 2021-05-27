@@ -37,12 +37,16 @@ public class StreamElement {
     }
 
     public void startFall() {
+        final StreamElement me = this;
         Thread t = new Thread() {
             @Override
             public void run() {
                 fb.startFall();
                 sm.removeService(this);
                 finale = fb.getGraphPath();
+                if (finale.isDeadEnd()) {
+                    sm.removeCrawler(me);
+                }
             }
         };
         sm.addService(t);

@@ -42,9 +42,9 @@ public class TrackBot {
 
     private void init() {
         fino_a_me.addNode(this.main);
-        if (main.getCity().getId() != ReadXML.getEnd().getCity().getId()) {
+        /*if (main.getCity().getId() != ReadXML.getEnd().getCity().getId()) {
             end = findTracks();
-        }
+        }*/
     }
 
     GraphPath end;

@@ -14,15 +14,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 public class ReadXML {
 
-    private XMLDocument doc;
-    private File file;
+    private final XMLDocument doc;
+    private final File file;
     private final HashMap<Integer, Node> gia_letti = new HashMap<>();
     private List<IXMLElement> city;
 
-    private static Node end;
+    private Node end;
 
     public ReadXML(File file) {
         this.file = file;
@@ -49,27 +50,25 @@ public class ReadXML {
     }
 
     private void generateNode(Node n) {
-        gia_letti.put(n.getCity().getId(), n);
-        n.getCity().getElements().stream().forEachOrdered(e -> {
-            Link l = (Link) e;
-            if (gia_letti.containsKey(l.getId())) {
-                n.addNode(gia_letti.get(l.getId()));
-            } else {
-                Node m = new Node((City) city.get(l.getId()));
-                generateNode(m);
-                n.addNode(m);
+        Stack<Node> da_leggere = new Stack<>();
+        da_leggere.addElement(n);
+        while (!da_leggere.isEmpty()) {
+            Node v = da_leggere.pop();
+            for (IXMLElement e : v.getCity().getElements()) {
+                Link l = (Link) e;
+                if (gia_letti.containsKey(l.getId())) {
+                    v.addNode(gia_letti.get(l.getId()));
+                } else if ((city.size() - 1) == l.getId()) {
+                    v.addNode(end);
+                    da_leggere.push(end);
+                } else {
+                    Node m = new Node((City) city.get(l.getId()));
+                    v.addNode(m);
+                    da_leggere.push(m);
+                }
             }
-        });
-        /*for (IXMLElement e : n.getCity().getElements()) {
-            Link l = (Link) e;
-            if (gia_letti.containsKey(l.getId())) {
-                n.addNode(gia_letti.get(l.getId()));
-            } else {
-                Node m = new Node((City) city.get(l.getId()));
-                generateNode(m);
-                n.addNode(m);
-            }
-        }*/
+            gia_letti.put(v.getCity().getId(), v);
+        }
         //n.computeCalcs();
     }
 
@@ -80,7 +79,7 @@ public class ReadXML {
         return null;
     }
 
-    public static Node getEnd() {
+    public Node getEnd() {
         return end;
     }
 
