@@ -10,8 +10,10 @@ import ttt.rovineperdute.io.ReadXML;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Stack;
 import ttt.rovineperdute.contents.waterfall.GraphPath;
+import ttt.rovineperdute.contents.waterfall.GraphPathComparator;
 import ttt.rovineperdute.trackresearch.TrackFinder;
 
 /**
@@ -32,7 +34,17 @@ public class RovinePerdute {
         TrackFinder t = new TrackFinder(n, r.getEnd(), r);
         Stack<GraphPath> findBestTrack = t.findBestTrack();
         ArrayList<GraphPath> computed = new ArrayList<>();
-        System.out.println(findBestTrack.pop().compute());
+
+        while (!findBestTrack.empty()) {
+            GraphPath gp = findBestTrack.pop();
+            gp.compute();
+            computed.add(gp);
+        }
+        Collections.sort(computed,new GraphPathComparator());
+
+        computed.stream().forEachOrdered(gp->{
+            System.out.println("GP: \tcosto: "+gp.compute()+" \tdim:"+gp.getPath().size());
+        });
 //        StreamHandler sm = new StreamHandler(n,r.getNodes().get(49));
 //        System.out.println(memoryUsed() / 1000000 + "MB");
 //        while(!sm.finished()){}
