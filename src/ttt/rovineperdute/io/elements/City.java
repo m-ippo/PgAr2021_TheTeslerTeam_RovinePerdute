@@ -9,20 +9,24 @@ import ttt.utils.xml.engine.annotations.Tag;
 @Element(Name = "city", IgnoreSubElementsOnWrite = true)
 public class City extends XMLElement {
 
+    @EngineField(FieldType = FieldType.READ)
     @Tag(Name = "x", ValueType = int.class)
-    @EngineField(FieldType = FieldType.READ)
-    private int x;                                              // ***provare con short***
+    private int x;
+    
+    @EngineField(FieldType = FieldType.READ)                   // ***provare con short***
     @Tag(Name = "y", ValueType = int.class)
-    @EngineField(FieldType = FieldType.READ)
     private int y;
-    @Tag(Name = "h", ValueType = int.class)
+    
     @EngineField(FieldType = FieldType.READ)
+    @Tag(Name = "h", ValueType = int.class)
     private int h;
+    
+    @EngineField(FieldType = FieldType.READ_AND_WRITE)
     @Tag(Name = "name", ValueType = String.class)
-    @EngineField(FieldType = FieldType.READ_AND_WRITE)
     private String name;
-    @Tag(Name = "id", ValueType = int.class)
+    
     @EngineField(FieldType = FieldType.READ_AND_WRITE)
+    @Tag(Name = "id", ValueType = int.class)
     private int id;
 
     public City() {
@@ -41,8 +45,7 @@ public class City extends XMLElement {
         return h;
     }
 
-    @Override
-    public String getName() {
+    public String getCityName() {
         return name;
     }
 

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+	<route cost="38070.184431655834" cities="12" team="Tonathiu">
+		<city name="campo base" id="0">
+		</city>
+		<city name="Guaia" id="5">
+		</city>
+		<city name="Guaia" id="12">
+		</city>
+		<city name="Guaia" id="16">
+		</city>
+		<city name="Verolanuova" id="21">
+		</city>
+		<city name="Guapalupa" id="27">
+		</city>
+		<city name="Guaia" id="30">
+		</city>
+		<city name="Machu Picchu" id="32">
+		</city>
+		<city name="Rio" id="37">
+		</city>
+		<city name="Quetzacoatl" id="38">
+		</city>
+		<city name="Mixco Vieio" id="44">
+		</city>
+		<city name="Rovine Perdute" id="49">
+		</city>
+	</route>
+	<route cost="9345.0" cities="16" team="Metztli">
+		<city name="campo base" id="0">
+		</city>
+		<city name="Caracol" id="4">
+		</city>
+		<city name="Rio" id="6">
+		</city>
+		<city name="Qu'umarkaj" id="8">
+		</city>
+		<city name="Teotiguacan" id="10">
+		</city>
+		<city name="Qu'umarkaj" id="17">
+		</city>
+		<city name="Guaia" id="16">
+		</city>
+		<city name="Verolanuova" id="21">
+		</city>
+		<city name="Guapalupa" id="27">
+		</city>
+		<city name="Quetzacoatl" id="33">
+		</city>
+		<city name="Macondo" id="29">
+		</city>
+		<city name="Tikal" id="36">
+		</city>
+		<city name="Qu'umarkaj" id="40">
+		</city>
+		<city name="Quetzacoatl" id="38">
+		</city>
+		<city name="Mixco Vieio" id="44">
+		</city>
+		<city name="Rovine Perdute" id="49">
+		</city>
+	</route>
+</routes>

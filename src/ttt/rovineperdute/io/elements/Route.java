@@ -24,13 +24,6 @@ public class Route extends XMLElement {
 
     public Route() {
         super("route");
-        //init();
-    }
-
-    private void init() {
-        addTag(new XMLTag("team"));
-        addTag(new XMLTag("cost"));
-        addTag(new XMLTag("cities"));
     }
 
     public void setCities(Integer cities) {

@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import ttt.rovineperdute.contents.graph.Node;
+import ttt.rovineperdute.io.WriteXML;
 import ttt.rovineperdute.trackresearch.TrackFinder;
 
 /**
@@ -26,11 +27,14 @@ public class RovinePerdute {
 
     public static void main(String[] args) {
 
-        teamTonatiuh();
+        TrackFinder tf1 = teamTonatiuh();
+        TrackFinder tf2 = teamMetztli();
+        WriteXML w = new WriteXML(new File("output.xml"));
+        w.writeXML(tf1.getTrack(), tf2.getTrack(), tf1.getFinalDistance(), tf2.getFinalDistance());
         System.out.println(memoryUsed() / 1000000 + "MB");
     }
 
-    public static void teamTonatiuh(){
+    public static TrackFinder teamTonatiuh() {
         File f = new File("PgAr_Map_50.xml");
         ReadXML r = new ReadXML(f);
         Node n = r.putCityInGraph();
@@ -41,9 +45,10 @@ public class RovinePerdute {
         ArrayList<Node> track = t.getTrack();
         printTrack(track);
         System.out.println("Total distance : " + t.getFinalDistance());
+        return t;
     }
 
-    public static void teamMetztli(){
+    public static TrackFinder teamMetztli() {
         File f = new File("PgAr_Map_50.xml");
         ReadXML r = new ReadXML(f);
         Node n = r.putCityInGraph();
@@ -54,12 +59,13 @@ public class RovinePerdute {
         ArrayList<Node> track = t.getTrack();
         printTrack(track);
         System.out.println("Total distance : " + t.getFinalDistance());
+        return t;
     }
 
-    public static void printTrack(ArrayList<Node> track){
-        for(int i = 0; i < track.size(); i++){
+    public static void printTrack(ArrayList<Node> track) {
+        for (int i = 0; i < track.size(); i++) {
             System.out.print(track.get(i).toString());
-            if(i != track.size() - 1){
+            if (i != track.size() - 1) {
                 System.out.println("--->");
             } else {
                 System.out.println();
