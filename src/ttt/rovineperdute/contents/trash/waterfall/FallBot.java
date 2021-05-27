@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ttt.rovineperdute.contents.waterfall;
+package ttt.rovineperdute.contents.trash.waterfall;
 
 import java.util.Iterator;
 import ttt.rovineperdute.graph.Node;
