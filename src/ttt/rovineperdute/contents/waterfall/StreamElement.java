@@ -15,11 +15,12 @@
  */
 package ttt.rovineperdute.contents.waterfall;
 
-import ttt.rovineperdute.contents.graph.Node;
+import ttt.rovineperdute.graph.Node;
 
 /**
  *
  * @author gabri
+ * 
  */
 public class StreamElement {
 

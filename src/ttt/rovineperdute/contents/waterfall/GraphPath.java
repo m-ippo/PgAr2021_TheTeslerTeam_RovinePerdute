@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import ttt.rovineperdute.contents.graph.Node;
+import ttt.rovineperdute.graph.Node;
 import ttt.rovineperdute.trackresearch.TrackFinder;
 
 /**

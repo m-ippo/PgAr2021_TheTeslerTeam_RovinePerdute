@@ -1,4 +1,4 @@
-package ttt.rovineperdute.contents.graph;
+package ttt.rovineperdute.graph;
 
 import ttt.rovineperdute.io.elements.City;
 
@@ -7,9 +7,8 @@ import java.util.*;
 public class Node {
 
     private final LinkedList<Node> links = new LinkedList<>();
-    //private final HashMap<Node, Double> link_values = new HashMap<>();
-    private final City city;
-    private final LinkedHashSet<Node> dijkstra = new LinkedHashSet<>();
+    private City city;
+    private LinkedHashSet<Node> dijkstra = new LinkedHashSet<>();
 
     public Node(City city) {
         this.city = city;
@@ -60,16 +59,16 @@ public class Node {
     }
 
     public void addDijkstraNode(Node n) {
-         dijkstra.add(n);
+        dijkstra.add(n);
     }
 
     public void removeDijkstraNode(Node n) {
-        /* boolean remove =*/ dijkstra.remove(n);
+        boolean remove = dijkstra.remove(n);
         //System.out.println("Rimosso con successo? " + remove);
     }
 
     public LinkedHashSet<Node> getDijkstra() {
-        return  dijkstra;
+        return dijkstra;
     }
 
     public void stampaPercorsi(String tabs) {
@@ -79,15 +78,18 @@ public class Node {
         });
     }
 
-//    public void computeCalcs() {
-//        links.forEach(l -> {
-//            link_values.put(l, calcDist(l, this));
-//        });
-//    }
-//
-//    private double calcDist(Node to, Node from) {
-//        return Math.sqrt(Math.pow(from.getCity().getX() - to.getCity().getX(), 2) + Math.pow(from.getCity().getY() - to.getCity().getY(), 2));
-//    }
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Node){
+            return ((Node) o).getCity().getId() == city.getId();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(city);
+    }
 
     @Override
     public String toString() {

@@ -16,7 +16,7 @@
 package ttt.rovineperdute.contents.waterfall;
 
 import java.util.Iterator;
-import ttt.rovineperdute.contents.graph.Node;
+import ttt.rovineperdute.graph.Node;
 
 /**
  *

@@ -5,10 +5,10 @@
  */
 package ttt.rovineperdute;
 
-import ttt.rovineperdute.contents.graph.Node;
 import ttt.rovineperdute.io.ReadXML;
 
 import java.io.File;
+import ttt.rovineperdute.graph.Node;
 import ttt.rovineperdute.trackresearch.TrackFinder;
 
 /**

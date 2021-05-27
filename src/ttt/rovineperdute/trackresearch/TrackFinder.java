@@ -3,7 +3,7 @@ package ttt.rovineperdute.trackresearch;
 import ttt.rovineperdute.io.ReadXML;
 
 import java.util.*;
-import ttt.rovineperdute.contents.graph.Node;
+import ttt.rovineperdute.graph.Node;
 
 public class TrackFinder {
 

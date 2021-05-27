@@ -1,6 +1,5 @@
 package ttt.rovineperdute.io;
 
-import ttt.rovineperdute.contents.graph.Node;
 import ttt.rovineperdute.io.elements.City;
 import ttt.rovineperdute.io.elements.Link;
 import ttt.utils.console.output.GeneralFormatter;
@@ -15,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import ttt.rovineperdute.graph.Node;
 
 public class ReadXML {
 
