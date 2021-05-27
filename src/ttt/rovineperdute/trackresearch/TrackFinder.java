@@ -40,16 +40,16 @@ public class TrackFinder {
         Node attuale = start_node;
         while (!da_collegare.isEmpty()) {
             Node piu_vicino = null;
-            Double min = 0.0;
+            Double min = Double.MAX_VALUE;
             double fino_ad_ora = getTotalDistance(attuale);
 
             for (Node n : attuale.getLinks()) {
                 if (da_collegare.contains(n)) {
                     double dist = calcDist(n, attuale);
-                    if(min == 0.0){
-                        min = dist;
-                    }
-                    if (Math.abs(min - dist) < THRESHOLD){
+//                    if(min == 0.0){
+//                        min = dist;
+//                    }
+                    if (dist < min){
                         min = dist;
                         piu_vicino = n;
                     }
@@ -59,9 +59,9 @@ public class TrackFinder {
                         valori.put(n, dist);
                         attuale.addDijkstraNode(n);
                     } else if(Math.abs(valori.get(n) - dist) < THRESHOLD){
-//                        Node precedente = precedenti.get(n);
-//                        precedente.removeDijkstraNode(n);
-                        removeFromAll(n);
+                        Node precedente = precedenti.get(n);
+                        precedente.removeDijkstraNode(n);
+//                        removeFromAll(n);
                         precedenti.put(n, attuale);
                         valori.put(n, dist);
                         attuale.addDijkstraNode(n);
@@ -90,11 +90,11 @@ public class TrackFinder {
                         valori.put(n, dist);
                         piu_vicino.addDijkstraNode(n);
                         precedenti.put(n, piu_vicino);
-                    } else if (Math.abs(dist - valore_attuale) < THRESHOLD) {
+                    } else if (Math.abs(dist - valore_attuale) > THRESHOLD) {
                         valori.put(n, dist);
-//                        Node precedente = precedenti.get(n);
-//                        precedente.removeDijkstraNode(n);
-                        removeFromAll(n);
+                        Node precedente = precedenti.get(n);
+                        precedente.removeDijkstraNode(n);
+//                        removeFromAll(n);
                         piu_vicino.addDijkstraNode(n);
                         precedenti.put(n, piu_vicino);
                     }

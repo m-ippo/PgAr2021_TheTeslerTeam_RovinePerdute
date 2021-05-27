@@ -64,7 +64,7 @@ public class Node {
 
     public void removeDijkstraNode(Node n) {
         boolean remove = dijkstra.remove(n);
-        System.out.println("Rimosso con successo? " + remove);
+        //System.out.println("Rimosso con successo? " + remove);
     }
 
     public LinkedHashSet<Node> getDijkstra() {
