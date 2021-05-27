@@ -15,7 +15,7 @@
  */
 package ttt.rovineperdute.contents.trash.waterfall;
 
-import ttt.rovineperdute.graph.Node;
+import ttt.rovineperdute.contents.graph.Node;
 
 /**
  *

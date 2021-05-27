@@ -1,4 +1,4 @@
-package ttt.rovineperdute.graph;
+package ttt.rovineperdute.contents.graph;
 
 import ttt.rovineperdute.io.elements.City;
 
@@ -8,7 +8,6 @@ public class Node {
 
     private final LinkedList<Node> links = new LinkedList<>();
     private City city;
-    private LinkedHashSet<Node> dijkstra = new LinkedHashSet<>();
 
     public Node(City city) {
         this.city = city;
@@ -56,26 +55,6 @@ public class Node {
             }
         }
         return Optional.empty();
-    }
-
-    public void addDijkstraNode(Node n) {
-        dijkstra.add(n);
-    }
-
-    public void removeDijkstraNode(Node n) {
-        boolean remove = dijkstra.remove(n);
-        //System.out.println("Rimosso con successo? " + remove);
-    }
-
-    public LinkedHashSet<Node> getDijkstra() {
-        return dijkstra;
-    }
-
-    public void stampaPercorsi(String tabs) {
-        dijkstra.forEach(n -> {
-            System.out.println(tabs + n.toString());
-            n.stampaPercorsi(tabs + "\t");
-        });
     }
 
     @Override
