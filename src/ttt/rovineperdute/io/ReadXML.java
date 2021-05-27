@@ -18,12 +18,12 @@ import java.util.Stack;
 
 public class ReadXML {
 
-    private XMLDocument doc;
-    private File file;
-    private HashMap<Integer, Node> gia_letti = new HashMap<>();
+    private final XMLDocument doc;
+    private final File file;
+    private final HashMap<Integer, Node> gia_letti = new HashMap<>();
     private List<IXMLElement> city;
 
-    private static Node end;
+    private Node end;
 
     public ReadXML(File file) {
         this.file = file;
@@ -50,7 +50,6 @@ public class ReadXML {
     }
 
     private void generateNode(Node n) {
-        //gia_letti.put(n.getCity().getId(), n);
         Stack<Node> da_leggere = new Stack<>();
         da_leggere.addElement(n);
         while (!da_leggere.isEmpty()) {
@@ -59,6 +58,9 @@ public class ReadXML {
                 Link l = (Link) e;
                 if (gia_letti.containsKey(l.getId())) {
                     v.addNode(gia_letti.get(l.getId()));
+                } else if ((city.size() - 1) == l.getId()) {
+                    v.addNode(end);
+                    da_leggere.push(end);
                 } else {
                     Node m = new Node((City) city.get(l.getId()));
                     v.addNode(m);
@@ -67,16 +69,7 @@ public class ReadXML {
             }
             gia_letti.put(v.getCity().getId(), v);
         }
-//        for (IXMLElement e : n.getCity().getElements()) {
-//            Link l = (Link) e;
-//            if (gia_letti.containsKey(l.getId())) {
-//                n.addNode(gia_letti.get(l.getId()));
-//            } else {
-//                Node m = new Node((City) city.get(l.getId()));
-//                da_leggere.addElement(m);
-//                n.addNode(m);
-//            }
-//        }
+        //n.computeCalcs();
     }
 
     public XMLDocument getDocument() {
@@ -86,7 +79,7 @@ public class ReadXML {
         return null;
     }
 
-    public static Node getEnd() {
+    public Node getEnd() {
         return end;
     }
 

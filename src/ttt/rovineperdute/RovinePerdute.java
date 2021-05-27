@@ -9,6 +9,9 @@ import ttt.rovineperdute.graph.Node;
 import ttt.rovineperdute.io.ReadXML;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+
 import ttt.rovineperdute.trackresearch.TrackFinder;
 
 /**
@@ -27,12 +30,18 @@ public class RovinePerdute {
         //////////////////////////////////////////////////////////////////////////
         //   se si va a ritroso dai precedenti esce giusto
         //////////////////////////////////////////////////////////////////////////
-
-        File f = new File("PgAr_Map_50.xml");
+        long t1 = new Date().getTime();
+        File f = new File("PgAr_Map_5.xml");
         ReadXML r = new ReadXML(f);
         Node n = r.putCityInGraph();
-        TrackFinder t = new TrackFinder(n, r);
+        TrackFinder t = new TrackFinder(n,r.getEnd(), r);
         t.find3();
+        System.out.println(new Date().getTime() - t1);
+
+        System.out.println(t.getFinalDistance());
+        ArrayList<Node> track = t.getTrack();
+        System.out.println(memoryUsed() / 1000000 +"MB");
+        System.gc();
         System.out.println(memoryUsed() / 1000000 +"MB");
     }
 

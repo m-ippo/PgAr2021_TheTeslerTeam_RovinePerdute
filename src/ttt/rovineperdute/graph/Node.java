@@ -79,6 +79,19 @@ public class Node {
     }
 
     @Override
+    public boolean equals(Object o){
+        if(o instanceof Node){
+            return ((Node) o).getCity().getId() == city.getId();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(city);
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Node[").append(city.getName()).append(",ID:").append(city.getId()).append("]");
