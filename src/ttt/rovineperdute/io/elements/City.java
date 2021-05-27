@@ -6,17 +6,17 @@ import ttt.utils.xml.document.XMLElement;
 import ttt.utils.xml.engine.annotations.Element;
 import ttt.utils.xml.engine.annotations.Tag;
 
-@Element(Name = "city")
+@Element(Name = "city", IgnoreSubElementsOnWrite = true)
 public class City extends XMLElement {
 
     @Tag(Name = "x", ValueType = int.class)
-    @EngineField(FieldType = FieldType.READ_AND_WRITE)
-    private int x;
+    @EngineField(FieldType = FieldType.READ)
+    private int x;                                              // ***provare con short***
     @Tag(Name = "y", ValueType = int.class)
-    @EngineField(FieldType = FieldType.READ_AND_WRITE)
+    @EngineField(FieldType = FieldType.READ)
     private int y;
     @Tag(Name = "h", ValueType = int.class)
-    @EngineField(FieldType = FieldType.READ_AND_WRITE)
+    @EngineField(FieldType = FieldType.READ)
     private int h;
     @Tag(Name = "name", ValueType = String.class)
     @EngineField(FieldType = FieldType.READ_AND_WRITE)

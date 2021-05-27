@@ -1,4 +1,13 @@
 package ttt.rovineperdute.io.elements;
 
-public class Routes {
+import ttt.utils.xml.document.XMLElement;
+import ttt.utils.xml.engine.annotations.Element;
+
+@Element(Name = "routes")
+public class Routes extends XMLElement {
+
+    public Routes() {
+        super("routes");
+    }
+
 }
