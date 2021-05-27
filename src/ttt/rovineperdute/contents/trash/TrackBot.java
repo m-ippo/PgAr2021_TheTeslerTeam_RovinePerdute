@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ttt.rovineperdute.trackresearch;
+package ttt.rovineperdute.contents.trash;
 
-import ttt.rovineperdute.contents.waterfall.GraphPath;
+import ttt.rovineperdute.contents.trash.waterfall.GraphPath;
 import java.util.LinkedHashMap;
 import java.util.List;
 import ttt.rovineperdute.graph.Node;
