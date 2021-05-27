@@ -31,6 +31,9 @@ public class ReadXML {
         readDocument();
     }
 
+    /**
+     * Legge il documento XML e lo salva in #doc.
+     */
     private void readDocument() {
         try { // lettura xml
             XMLEngine engine = new XMLEngine(file, ttt.rovineperdute.io.elements.Map.class, City.class, Link.class);
@@ -41,6 +44,10 @@ public class ReadXML {
         }
     }
 
+    /**
+     * Inizializza la prima città della mappa.
+     * @return Nodo del "Campo Base".
+     */
     public Node putCityInGraph() {
         City campo_base = (City) city.get(0);
         end = new Node((City) city.get(city.size() - 1));
@@ -49,6 +56,10 @@ public class ReadXML {
         return first;
     }
 
+    /**
+     * Genera i nodi tra le città.
+     * @param n Il nodo di partenza
+     */
     private void generateNode(Node n) {
         Stack<Node> da_leggere = new Stack<>();
         da_leggere.addElement(n);
@@ -66,18 +77,28 @@ public class ReadXML {
             }
             gia_letti.put(v.getCity().getId(), v);
         }
-//        for (IXMLElement e : n.getCity().getElements()) {
-//            Link l = (Link) e;
-//            if (gia_letti.containsKey(l.getId())) {
-//                n.addNode(gia_letti.get(l.getId()));
-//            } else {
-//                Node m = new Node((City) city.get(l.getId()));
-//                da_leggere.addElement(m);
-//                n.addNode(m);
-//            }
-//        }
     }
 
+    @Deprecated
+    private void generateNodeRecursion(Node n) {
+        Stack<Node> da_leggere = new Stack<>();
+        da_leggere.addElement(n);
+        for (IXMLElement e : n.getCity().getElements()) {
+            Link l = (Link) e;
+            if (gia_letti.containsKey(l.getId())) {
+                n.addNode(gia_letti.get(l.getId()));
+            } else {
+                Node m = new Node((City) city.get(l.getId()));
+                da_leggere.addElement(m);
+                n.addNode(m);
+            }
+        }
+    }
+
+    /**
+     * Ritorna il documento creato dalla lettura del file.
+     * @return Documento creato dalla lettura del file.
+     */
     public XMLDocument getDocument() {
         if (doc != null) {
             return doc;
@@ -85,10 +106,18 @@ public class ReadXML {
         return null;
     }
 
+    /**
+     * Ritorna il nodo finale (le rovine perdute).
+     * @return Nodo finale.
+     */
     public Node getEnd() {
         return end;
     }
 
+    /**
+     * Ritorna la mappa ID-nodi letti dal file XML.
+     * @return Mappa ID-nodi letti dal file XML.
+     */
     public Map<Integer, Node> getNodes() {
         return Collections.unmodifiableMap(gia_letti);
     }

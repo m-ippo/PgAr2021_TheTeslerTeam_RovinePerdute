@@ -11,7 +11,7 @@ public class City extends XMLElement {
 
     @Tag(Name = "x", ValueType = int.class)
     @EngineField(FieldType = FieldType.READ_AND_WRITE)
-    private int x;                                              // ***provare con short***
+    private int x;
     @Tag(Name = "y", ValueType = int.class)
     @EngineField(FieldType = FieldType.READ_AND_WRITE)
     private int y;

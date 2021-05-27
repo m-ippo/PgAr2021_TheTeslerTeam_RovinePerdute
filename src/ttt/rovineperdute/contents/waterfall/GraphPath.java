@@ -77,11 +77,11 @@ public class GraphPath {
             Node previous = iterator.next();
             if (iterator.hasNext()) {
                 Node current = iterator.next();
-                cost = TrackFinder.calcDist(previous, current);
+                cost = calcDist(previous, current, 0);
                 while (iterator.hasNext()) {
                     previous = current;
                     current = iterator.next();
-                    cost += TrackFinder.calcDist(previous, current);
+                    cost += calcDist(previous, current, 0);
                     if(current == end){
                         break;
                     }
@@ -90,6 +90,14 @@ public class GraphPath {
             }
         }
         return Double.POSITIVE_INFINITY;
+    }
+
+    public static double calcDist(Node to, Node from, int team) {
+        if(team == 0){
+            return Math.sqrt(Math.pow(from.getCity().getX() - to.getCity().getX(), 2) + Math.pow(from.getCity().getY() - to.getCity().getY(), 2));
+        } else {
+            return Math.abs(to.getCity().getH() - from.getCity().getH());
+        }
     }
 
     @Override
