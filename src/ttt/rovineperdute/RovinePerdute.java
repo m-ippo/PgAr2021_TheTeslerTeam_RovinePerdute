@@ -9,12 +9,6 @@ import ttt.rovineperdute.contents.graph.Node;
 import ttt.rovineperdute.io.ReadXML;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Stack;
-import ttt.rovineperdute.contents.waterfall.GraphPath;
-import ttt.rovineperdute.contents.waterfall.GraphPathComparator;
 import ttt.rovineperdute.trackresearch.TrackFinder;
 
 /**
@@ -33,13 +27,12 @@ public class RovinePerdute {
         //////////////////////////////////////////////////////////////////////////
         //   se si va a ritroso dai precedenti esce giusto
         //////////////////////////////////////////////////////////////////////////
-
         File f = new File("PgAr_Map_50.xml");
         ReadXML r = new ReadXML(f);
         Node n = r.putCityInGraph();
-        TrackFinder t = new TrackFinder(n, r);
+        TrackFinder t = new TrackFinder(n, r.getEnd(), r);
         t.find3();
-        System.out.println(memoryUsed() / 1000000 +"MB");
+        System.out.println(memoryUsed() / 1000000 + "MB");
     }
 
 }

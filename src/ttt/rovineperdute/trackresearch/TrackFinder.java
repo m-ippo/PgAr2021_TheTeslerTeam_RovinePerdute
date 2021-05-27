@@ -1,15 +1,9 @@
 package ttt.rovineperdute.trackresearch;
 
-import java.util.ArrayList;
-import ttt.rovineperdute.contents.graph.Node;
 import ttt.rovineperdute.io.ReadXML;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Stack;
-import ttt.rovineperdute.contents.waterfall.GraphPath;
+import java.util.*;
+import ttt.rovineperdute.contents.graph.Node;
 
 public class TrackFinder {
 
@@ -38,114 +32,8 @@ public class TrackFinder {
             valori.put(n, Double.MAX_VALUE); // -1 perchè non possono essere negativi
             precedenti.put(n, null);
         }
-        valori.put(start_node, Double.NEGATIVE_INFINITY);
+        valori.put(start_node, 0.0);
         da_collegare.remove(start_node);
-    }
-
-    public Stack<GraphPath> findBestTrack() {
-        Node attuale = start_node;
-
-        Stack<GraphPath> backups = new Stack<>();
-        Stack<GraphPath> ends = new Stack<>();
-        GraphPath current_path = new GraphPath().addNode(start_node);
-        backups.push(current_path);
-        while (!da_collegare.isEmpty()) {
-            Node piu_vicino = null;
-            Double min = Double.MAX_VALUE;
-            double fino_ad_ora = getTotalDistance(attuale);
-
-            for (Node n : attuale.getLinks()) {
-                if (da_collegare.contains(n)) {
-                    double dist = calcDist(n, attuale);
-//                    if(min == 0.0){
-//                        min = dist;
-//                    }
-                    if (dist < min){
-                        min = dist;
-                        piu_vicino = n;
-                    }
-                    dist += fino_ad_ora;
-                    if(valori.get(n) == -1) {
-                        precedenti.put(n, attuale);
-                        valori.put(n, dist);
-                        attuale.addDijkstraNode(n);
-                    } else if(Math.abs(valori.get(n) - dist) < THRESHOLD){
-                        Node precedente = precedenti.get(n);
-                        precedente.removeDijkstraNode(n);
-//                        removeFromAll(n);
-                        precedenti.put(n, attuale);
-                        valori.put(n, dist);
-                        attuale.addDijkstraNode(n);
-                    }
-                }
-            }
-            da_collegare.remove(piu_vicino);
-            if (piu_vicino == null) {
-                if (current_path.contains(end_node)) {
-                    ends.push(current_path);
-                }
-                current_path = backups.pop();
-                attuale = current_path.getPath().getLast();
-                continue;
-            }
-
-            precedenti.put(piu_vicino, attuale);
-            attuale.addDijkstraNode(piu_vicino);
-
-            fino_ad_ora += min;
-            valori.put(piu_vicino, fino_ad_ora);
-            da_collegare.remove(piu_vicino);
-            attuale = piu_vicino;
-
-            double dist;
-            for (Node n : piu_vicino.getLinks()) {
-                if (da_collegare.contains(n)) {
-                    dist = fino_ad_ora + calcDist(piu_vicino, n);
-                    double valore_attuale = valori.get(n);
-                    boolean isAlreadyLinked = valore_attuale != -1;
-                    if (!isAlreadyLinked) {
-                        valori.put(n, dist);
-                        //piu_vicino.addDijkstraNode(n);
-                        precedenti.put(n, piu_vicino);
-                    } else if (Math.abs(dist - valore_attuale) > THRESHOLD) {
-                        valori.put(n, dist);
-                        Node precedente = precedenti.get(n);
-                        precedente.removeDijkstraNode(n);
-//                        removeFromAll(n);
-                        piu_vicino.addDijkstraNode(n);
-                        precedenti.put(n, piu_vicino);
-                    }
-                }
-            }
-        }
-    }
-
-    public void find2(){
-        for(Node n : start_node.getLinks()){
-            precedenti.put(n, start_node);
-            valori.put(n, calcDist(start_node, n));
-        }
-        while(!da_collegare.isEmpty()){
-            Node piu_vicino = null;
-            double min = valori.get(da_collegare.get(0));
-
-            for(Node n : da_collegare){
-                double dist = valori.get(n);
-                if(valori.get(n) != -1 && dist - min < THRESHOLD){
-                    min = dist;
-                    piu_vicino = n;
-                }
-            }
-            double dist_piu_vicino = valori.get(piu_vicino);
-            for(Node n : piu_vicino.getLinks()){
-                double dist = calcDist(n, piu_vicino) + dist_piu_vicino;
-                if(dist == -1 ||  dist - valori.get(n) < THRESHOLD){
-                    precedenti.put(n, piu_vicino);
-                    valori.put(n, dist);
-                }
-            }
-            da_collegare.remove(piu_vicino);
-        }
     }
 
     public void find3() {
@@ -172,10 +60,6 @@ public class TrackFinder {
             double dist = 0.0;
             for (Node n : piu_vicino.getLinks()) {
                 dist = valori.get(piu_vicino) + calcDist(n, piu_vicino);
-                Double d = valori.get(n);
-                if(d == null){
-                    System.out.println("botr");
-                }
                 if (valori.get(n) == -1 || dist - valori.get(n) < THRESHOLD) {
                     precedenti.put(n, piu_vicino);
                     valori.put(n, dist);
@@ -183,46 +67,22 @@ public class TrackFinder {
             }
             da_collegare.remove(piu_vicino);
         }
-        return ends;
     }
 
-    private void removeFromAll(Node d) {
-        for (Node n : reader.getNodes().values()) {
-            n.removeDijkstraNode(d);
+
+    public double getFinalDistance(){
+        return valori.get(end_node);
+    }
+
+    public ArrayList<Node> getTrack(){
+        ArrayList<Node> track = new ArrayList<>();
+        Node attuale = end_node;
+        while(attuale != null){
+            track.add(attuale);
+            attuale = precedenti.get(attuale);
         }
-    }
-
-    private long countLeftBack(Node n) {
-        return da_collegare.stream().filter((t) -> {
-            return n.getLinks().contains(t);
-        }).count();
-    }
-
-    private double getTotalDistance(Node n) {
-        Node precedente = precedenti.get(n);
-        double dist = 0;
-        while (precedente != null) {
-            dist += calcDist(precedente, n);
-            n = precedente;
-            precedente = precedenti.get(precedente);
-        }
-        return dist;
-    }
-
-    private Node findNearestNode(Node to) {
-        Node to_ret = da_collegare.get(0);
-        double min = calcDist(to, da_collegare.get(0));
-        for (Node n : to.getLinks()) {
-            if (da_collegare.contains(n)) {
-                double distance = calcDist(to, n);
-                if (distance < min) {
-                    min = distance;
-                    to_ret = n;
-                }
-            }
-        }
-        valori.put(to_ret, min);
-        return to_ret;
+        Collections.reverse(track);
+        return track;
     }
 
     public static double calcDist(Node to, Node from) {
