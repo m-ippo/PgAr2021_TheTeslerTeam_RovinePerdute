@@ -8,6 +8,8 @@ package ttt.rovineperdute;
 import ttt.rovineperdute.io.ReadXML;
 
 import java.io.File;
+import java.util.ArrayList;
+
 import ttt.rovineperdute.graph.Node;
 import ttt.rovineperdute.trackresearch.TrackFinder;
 
@@ -32,6 +34,7 @@ public class RovinePerdute {
         Node n = r.putCityInGraph();
         TrackFinder t = new TrackFinder(n, r.getEnd(), r);
         t.find3();
+        ArrayList<Node> track = t.getTrack();
         System.out.println(memoryUsed() / 1000000 + "MB");
     }
 
