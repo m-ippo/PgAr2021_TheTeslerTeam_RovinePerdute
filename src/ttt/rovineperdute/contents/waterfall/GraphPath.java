@@ -68,7 +68,7 @@ public class GraphPath {
 
     Double cost = Double.POSITIVE_INFINITY;
 
-    public Double compute() {
+    public Double compute(Node end) {
         if (cost != Double.POSITIVE_INFINITY) {
             return cost;
         }
@@ -82,6 +82,9 @@ public class GraphPath {
                     previous = current;
                     current = iterator.next();
                     cost += TrackFinder.calcDist(previous, current);
+                    if(current == end){
+                        break;
+                    }
                 }
                 return cost;
             }

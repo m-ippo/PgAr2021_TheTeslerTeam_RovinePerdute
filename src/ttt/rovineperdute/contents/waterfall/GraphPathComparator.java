@@ -25,7 +25,7 @@ public class GraphPathComparator implements Comparator<GraphPath> {
 
     @Override
     public int compare(GraphPath o1, GraphPath o2) {
-        int compareTo = o1.compute().compareTo(o2.compute());
+        int compareTo = o1.compute(null).compareTo(o2.compute(null));
         if (compareTo == 0) {
             return ((Integer) o1.getPath().size()).compareTo(o2.getPath().size());
         }
