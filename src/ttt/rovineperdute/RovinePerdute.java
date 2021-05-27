@@ -11,6 +11,7 @@ import ttt.rovineperdute.io.ReadXML;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Stack;
 import ttt.rovineperdute.contents.waterfall.GraphPath;
 import ttt.rovineperdute.contents.waterfall.GraphPathComparator;
@@ -28,6 +29,7 @@ public class RovinePerdute {
     static final Runtime runtime = Runtime.getRuntime();
 
     public static void main(String[] args) {
+        long t1 = new Date().getTime();
         File f = new File("PgAr_Map_10000.xml");
         ReadXML r = new ReadXML(f);
         Node n = r.putCityInGraph();
@@ -40,10 +42,11 @@ public class RovinePerdute {
             gp.compute();
             computed.add(gp);
         }
-        Collections.sort(computed,new GraphPathComparator());
+        Collections.sort(computed, new GraphPathComparator());
 
-        computed.stream().forEachOrdered(gp->{
-            System.out.println("GP: \tcosto: "+gp.compute()+" \tdim:"+gp.getPath().size());
+        System.out.println(new Date().getTime() - t1);
+        computed.stream().forEachOrdered(gp -> {
+            System.out.println("GP: \tcosto: " + gp.compute() + " \tdim:" + gp.getPath().size());
         });
 //        StreamHandler sm = new StreamHandler(n,r.getNodes().get(49));
 //        System.out.println(memoryUsed() / 1000000 + "MB");
