@@ -43,13 +43,11 @@ public class RovinePerdute {
             computed.add(gp);
         }
         Collections.sort(computed, new GraphPathComparator());
-
         System.out.println(new Date().getTime() - t1);
         computed.stream().forEachOrdered(gp -> {
             System.out.println(gp);
             System.out.println("GP: \tcosto: " + gp.compute(null) + " \tdim:" + gp.getPath().size());
         });
-        
 //        StreamHandler sm = new StreamHandler(n,r.getNodes().get(49));
 //        System.out.println(memoryUsed() / 1000000 + "MB");
 //        while(!sm.finished()){}
