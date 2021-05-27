@@ -3,7 +3,6 @@ package ttt.rovineperdute.io.elements;
 import ttt.utils.engines.enums.FieldType;
 import ttt.utils.engines.interfaces.EngineField;
 import ttt.utils.xml.document.XMLElement;
-import ttt.utils.xml.document.XMLTag;
 import ttt.utils.xml.engine.annotations.Element;
 import ttt.utils.xml.engine.annotations.Tag;
 
