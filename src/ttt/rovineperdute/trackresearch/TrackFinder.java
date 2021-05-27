@@ -38,9 +38,8 @@ public class TrackFinder {
             valori.put(n, Double.MAX_VALUE); // -1 perchè non possono essere negativi
             precedenti.put(n, null);
         }
+        valori.put(start_node, Double.NEGATIVE_INFINITY);
         da_collegare.remove(start_node);
-//        end_node.getLinks().clear();
-        valori.put(start_node, Double.MIN_VALUE);
     }
 
     public Stack<GraphPath> findBestTrack() {
@@ -53,12 +52,30 @@ public class TrackFinder {
         while (!da_collegare.isEmpty()) {
             Node piu_vicino = null;
             Double min = Double.MAX_VALUE;
+            double fino_ad_ora = getTotalDistance(attuale);
+
             for (Node n : attuale.getLinks()) {
                 if (da_collegare.contains(n)) {
                     double dist = calcDist(n, attuale);
-                    if (dist < min) {
+//                    if(min == 0.0){
+//                        min = dist;
+//                    }
+                    if (dist < min){
                         min = dist;
                         piu_vicino = n;
+                    }
+                    dist += fino_ad_ora;
+                    if(valori.get(n) == -1) {
+                        precedenti.put(n, attuale);
+                        valori.put(n, dist);
+                        attuale.addDijkstraNode(n);
+                    } else if(Math.abs(valori.get(n) - dist) < THRESHOLD){
+                        Node precedente = precedenti.get(n);
+                        precedente.removeDijkstraNode(n);
+//                        removeFromAll(n);
+                        precedenti.put(n, attuale);
+                        valori.put(n, dist);
+                        attuale.addDijkstraNode(n);
                     }
                 }
             }
@@ -71,18 +88,16 @@ public class TrackFinder {
                 attuale = current_path.getPath().getLast();
                 continue;
             }
-            piu_vicino.removeNode(attuale);
 
-            double fino_ad_ora = min + getTotalDistance(attuale);
-            valori.put(piu_vicino, fino_ad_ora);
             precedenti.put(piu_vicino, attuale);
+            attuale.addDijkstraNode(piu_vicino);
 
-            //attuale.addDijkstraNode(piu_vicino);
-            backups.push(current_path.split());
-            current_path.addNode(piu_vicino);
+            fino_ad_ora += min;
+            valori.put(piu_vicino, fino_ad_ora);
+            da_collegare.remove(piu_vicino);
             attuale = piu_vicino;
 
-            /*double dist;
+            double dist;
             for (Node n : piu_vicino.getLinks()) {
                 if (da_collegare.contains(n)) {
                     dist = fino_ad_ora + calcDist(piu_vicino, n);
@@ -92,16 +107,81 @@ public class TrackFinder {
                         valori.put(n, dist);
                         //piu_vicino.addDijkstraNode(n);
                         precedenti.put(n, piu_vicino);
-                    } else if (Math.abs(dist - valore_attuale) < THRESHOLD) {
+                    } else if (Math.abs(dist - valore_attuale) > THRESHOLD) {
                         valori.put(n, dist);
-                        //Node node = precedenti.get(n);
-                        //node.removeDijkstraNode(n);
-                        //removeFromAll(n);
-                        //piu_vicino.addDijkstraNode(n);
+                        Node precedente = precedenti.get(n);
+                        precedente.removeDijkstraNode(n);
+//                        removeFromAll(n);
+                        piu_vicino.addDijkstraNode(n);
                         precedenti.put(n, piu_vicino);
                     }
                 }
-            }*/
+            }
+        }
+    }
+
+    public void find2(){
+        for(Node n : start_node.getLinks()){
+            precedenti.put(n, start_node);
+            valori.put(n, calcDist(start_node, n));
+        }
+        while(!da_collegare.isEmpty()){
+            Node piu_vicino = null;
+            double min = valori.get(da_collegare.get(0));
+
+            for(Node n : da_collegare){
+                double dist = valori.get(n);
+                if(valori.get(n) != -1 && dist - min < THRESHOLD){
+                    min = dist;
+                    piu_vicino = n;
+                }
+            }
+            double dist_piu_vicino = valori.get(piu_vicino);
+            for(Node n : piu_vicino.getLinks()){
+                double dist = calcDist(n, piu_vicino) + dist_piu_vicino;
+                if(dist == -1 ||  dist - valori.get(n) < THRESHOLD){
+                    precedenti.put(n, piu_vicino);
+                    valori.put(n, dist);
+                }
+            }
+            da_collegare.remove(piu_vicino);
+        }
+    }
+
+    public void find3() {
+        for (Node n : start_node.getLinks()) {
+            precedenti.put(n, start_node);
+            valori.put(n, calcDist(n, start_node));
+        }
+
+        while (!da_collegare.isEmpty()) {
+            Node piu_vicino = null;
+            double min = 0.0;
+            for (Node n : da_collegare) {
+                if(min == 0.0 && valori.get(n) != -1){
+                    min = valori.get(n);
+                }
+                if (valori.get(n) != -1 && valori.get(n) - min < THRESHOLD) {
+                    min = valori.get(n);
+                    piu_vicino = n;
+                }
+            }
+            if (piu_vicino == null) {
+                break;
+            }
+            double dist = 0.0;
+            for (Node n : piu_vicino.getLinks()) {
+                dist = valori.get(piu_vicino) + calcDist(n, piu_vicino);
+                Double d = valori.get(n);
+                if(d == null){
+                    System.out.println("botr");
+                }
+                if (valori.get(n) == -1 || dist - valori.get(n) < THRESHOLD) {
+                    precedenti.put(n, piu_vicino);
+                    valori.put(n, dist);
+                }
+            }
+            da_collegare.remove(piu_vicino);
         }
         return ends;
     }

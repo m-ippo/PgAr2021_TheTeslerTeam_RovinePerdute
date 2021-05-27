@@ -58,9 +58,6 @@ public class ReadXML {
                 Link l = (Link) e;
                 if (gia_letti.containsKey(l.getId())) {
                     v.addNode(gia_letti.get(l.getId()));
-                } else if ((city.size() - 1) == l.getId()) {
-                    v.addNode(end);
-                    da_leggere.push(end);
                 } else {
                     Node m = new Node((City) city.get(l.getId()));
                     v.addNode(m);
@@ -69,7 +66,16 @@ public class ReadXML {
             }
             gia_letti.put(v.getCity().getId(), v);
         }
-        //n.computeCalcs();
+//        for (IXMLElement e : n.getCity().getElements()) {
+//            Link l = (Link) e;
+//            if (gia_letti.containsKey(l.getId())) {
+//                n.addNode(gia_letti.get(l.getId()));
+//            } else {
+//                Node m = new Node((City) city.get(l.getId()));
+//                da_leggere.addElement(m);
+//                n.addNode(m);
+//            }
+//        }
     }
 
     public XMLDocument getDocument() {

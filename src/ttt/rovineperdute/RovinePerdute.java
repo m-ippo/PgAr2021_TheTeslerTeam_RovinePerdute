@@ -29,37 +29,17 @@ public class RovinePerdute {
     static final Runtime runtime = Runtime.getRuntime();
 
     public static void main(String[] args) {
-        long t1 = new Date().getTime();
-        File f = new File("PgAr_Map_10000.xml");
+
+        //////////////////////////////////////////////////////////////////////////
+        //   se si va a ritroso dai precedenti esce giusto
+        //////////////////////////////////////////////////////////////////////////
+
+        File f = new File("PgAr_Map_50.xml");
         ReadXML r = new ReadXML(f);
         Node n = r.putCityInGraph();
-        TrackFinder t = new TrackFinder(n, r.getEnd(), r);
-        Stack<GraphPath> findBestTrack = t.findBestTrack();
-        ArrayList<GraphPath> computed = new ArrayList<>();
-
-        while (!findBestTrack.empty()) {
-            GraphPath gp = findBestTrack.pop();
-            gp.compute(r.getEnd());
-            computed.add(gp);
-        }
-        Collections.sort(computed, new GraphPathComparator());
-
-        System.out.println(new Date().getTime() - t1);
-        computed.stream().forEachOrdered(gp -> {
-            System.out.println(gp);
-            System.out.println("GP: \tcosto: " + gp.compute(null) + " \tdim:" + gp.getPath().size());
-        });
-        
-//        StreamHandler sm = new StreamHandler(n,r.getNodes().get(49));
-//        System.out.println(memoryUsed() / 1000000 + "MB");
-//        while(!sm.finished()){}
-//        System.out.println(memoryUsed() / 1000000 + "MB");
-//        System.out.println(sm.getCrawlers().size());
-//        sm.cleanup();
-//        System.out.println(sm.getCrawlers().size());
-//        System.out.println(memoryUsed() / 1000000 + "MB");
-//        System.gc();
-//        System.out.println(memoryUsed() / 1000000 + "MB");
+        TrackFinder t = new TrackFinder(n, r);
+        t.find3();
+        System.out.println(memoryUsed() / 1000000 +"MB");
     }
 
 }
