@@ -32,37 +32,55 @@ public class TrackFinder {
             valori.put(n, -1.0); // -1 perchè non possono essere negativi
             precedenti.put(n, null);
         }
-        da_collegare.remove(start_node);
         valori.put(start_node, Double.NEGATIVE_INFINITY);
+        da_collegare.remove(start_node);
     }
 
     public void findBestTrack() {
         Node attuale = start_node;
         while (!da_collegare.isEmpty()) {
             Node piu_vicino = null;
-            Double min = Double.POSITIVE_INFINITY;
+            Double min = 0.0;
+            double fino_ad_ora = getTotalDistance(attuale);
+
             for (Node n : attuale.getLinks()) {
                 if (da_collegare.contains(n)) {
                     double dist = calcDist(n, attuale);
-                    if (dist < min) {
+                    if(min == 0.0){
+                        min = dist;
+                    }
+                    if (Math.abs(min - dist) < THRESHOLD){
                         min = dist;
                         piu_vicino = n;
+                    }
+                    dist += fino_ad_ora;
+                    if(valori.get(n) == -1) {
+                        precedenti.put(n, attuale);
+                        valori.put(n, dist);
+                        attuale.addDijkstraNode(n);
+                    } else if(Math.abs(valori.get(n) - dist) < THRESHOLD){
+//                        Node precedente = precedenti.get(n);
+//                        precedente.removeDijkstraNode(n);
+                        removeFromAll(n);
+                        precedenti.put(n, attuale);
+                        valori.put(n, dist);
+                        attuale.addDijkstraNode(n);
                     }
                 }
             }
             if (piu_vicino == null) {
                 break;
             }
-            piu_vicino.removeNode(attuale);
 
-            double fino_ad_ora = min + getTotalDistance(attuale);
-            valori.put(piu_vicino, fino_ad_ora);
             precedenti.put(piu_vicino, attuale);
             attuale.addDijkstraNode(piu_vicino);
+
+            fino_ad_ora += min;
+            valori.put(piu_vicino, fino_ad_ora);
             da_collegare.remove(piu_vicino);
             attuale = piu_vicino;
 
-            /*double dist;
+            double dist;
             for (Node n : piu_vicino.getLinks()) {
                 if (da_collegare.contains(n)) {
                     dist = fino_ad_ora + calcDist(piu_vicino, n);
@@ -74,14 +92,14 @@ public class TrackFinder {
                         precedenti.put(n, piu_vicino);
                     } else if (Math.abs(dist - valore_attuale) < THRESHOLD) {
                         valori.put(n, dist);
-                        Node node = precedenti.get(n);
-                        node.removeDijkstraNode(n);
-                        //removeFromAll(n);
+//                        Node precedente = precedenti.get(n);
+//                        precedente.removeDijkstraNode(n);
+                        removeFromAll(n);
                         piu_vicino.addDijkstraNode(n);
                         precedenti.put(n, piu_vicino);
                     }
                 }
-            }*/
+            }
         }
     }
 
