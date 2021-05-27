@@ -28,14 +28,11 @@ public class RovinePerdute {
         //   se si va a ritroso dai precedenti esce giusto
         //////////////////////////////////////////////////////////////////////////
 
-        File f = new File("PgAr_Map_10000.xml");
+        File f = new File("PgAr_Map_50.xml");
         ReadXML r = new ReadXML(f);
         Node n = r.putCityInGraph();
-        //Node trovato = findNode(n, 35);
-        //TrackBot main_bot = new TrackBot(n, null, new GraphPath());
         TrackFinder t = new TrackFinder(n, r);
         t.find3();
-        //n.stampaPercorsi("");
         System.out.println(memoryUsed() / 1000000 +"MB");
     }
 

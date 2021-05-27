@@ -29,7 +29,7 @@ public class TrackFinder {
     private void init() {
         for (Node n : reader.getNodes().values()) {
             da_collegare.add(n);
-            valori.put(n, -1.0); // -1 perchè non possono essere negativi
+            valori.put(n, Double.MAX_VALUE); // -1 perchè non possono essere negativi
             precedenti.put(n, null);
         }
         valori.put(start_node, Double.NEGATIVE_INFINITY);
@@ -139,8 +139,11 @@ public class TrackFinder {
 
         while (!da_collegare.isEmpty()) {
             Node piu_vicino = null;
-            double min = valori.get(da_collegare.get(0));
+            double min = 0.0;
             for (Node n : da_collegare) {
+                if(min == 0.0 && valori.get(n) != -1){
+                    min = valori.get(n);
+                }
                 if (valori.get(n) != -1 && valori.get(n) - min < THRESHOLD) {
                     min = valori.get(n);
                     piu_vicino = n;
@@ -152,6 +155,10 @@ public class TrackFinder {
             double dist = 0.0;
             for (Node n : piu_vicino.getLinks()) {
                 dist = valori.get(piu_vicino) + calcDist(n, piu_vicino);
+                Double d = valori.get(n);
+                if(d == null){
+                    System.out.println("botr");
+                }
                 if (valori.get(n) == -1 || dist - valori.get(n) < THRESHOLD) {
                     precedenti.put(n, piu_vicino);
                     valori.put(n, dist);
