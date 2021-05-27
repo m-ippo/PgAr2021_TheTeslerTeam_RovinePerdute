@@ -103,6 +103,64 @@ public class TrackFinder {
         }
     }
 
+    public void find2(){
+        for(Node n : start_node.getLinks()){
+            precedenti.put(n, start_node);
+            valori.put(n, calcDist(start_node, n));
+        }
+        while(!da_collegare.isEmpty()){
+            Node piu_vicino = null;
+            double min = valori.get(da_collegare.get(0));
+
+            for(Node n : da_collegare){
+                double dist = valori.get(n);
+                if(valori.get(n) != -1 && dist - min < THRESHOLD){
+                    min = dist;
+                    piu_vicino = n;
+                }
+            }
+            double dist_piu_vicino = valori.get(piu_vicino);
+            for(Node n : piu_vicino.getLinks()){
+                double dist = calcDist(n, piu_vicino) + dist_piu_vicino;
+                if(dist == -1 ||  dist - valori.get(n) < THRESHOLD){
+                    precedenti.put(n, piu_vicino);
+                    valori.put(n, dist);
+                }
+            }
+            da_collegare.remove(piu_vicino);
+        }
+    }
+
+    public void find3() {
+        for (Node n : start_node.getLinks()) {
+            precedenti.put(n, start_node);
+            valori.put(n, calcDist(n, start_node));
+        }
+
+        while (!da_collegare.isEmpty()) {
+            Node piu_vicino = null;
+            double min = valori.get(da_collegare.get(0));
+            for (Node n : da_collegare) {
+                if (valori.get(n) != -1 && valori.get(n) - min < THRESHOLD) {
+                    min = valori.get(n);
+                    piu_vicino = n;
+                }
+            }
+            if (piu_vicino == null) {
+                break;
+            }
+            double dist = 0.0;
+            for (Node n : piu_vicino.getLinks()) {
+                dist = valori.get(piu_vicino) + calcDist(n, piu_vicino);
+                if (valori.get(n) == -1 || dist - valori.get(n) < THRESHOLD) {
+                    precedenti.put(n, piu_vicino);
+                    valori.put(n, dist);
+                }
+            }
+            da_collegare.remove(piu_vicino);
+        }
+    }
+
     private void removeFromAll(Node d) {
         for (Node n : reader.getNodes().values()) {
             n.removeDijkstraNode(d);

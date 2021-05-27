@@ -34,7 +34,7 @@ public class RovinePerdute {
         //Node trovato = findNode(n, 35);
         //TrackBot main_bot = new TrackBot(n, null, new GraphPath());
         TrackFinder t = new TrackFinder(n, r);
-        t.findBestTrack();
+        t.find3();
         //n.stampaPercorsi("");
         System.out.println(memoryUsed() / 1000000 +"MB");
     }
