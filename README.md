@@ -46,4 +46,4 @@ La raccolta dei seguenti dati è stata eseguita solamente con il file di 10.000 
   </tr>
 </table>
 <p>I tempi sono espressi tutti in millisecondi e sono i tempi totali di esecuzione del processo corrispondente (sia per il team 1 che per il team 2).</p>
-<p>Per risparmiare tempo di calcolo la ricerca dei percorsi per i due teams sono separati su due processi differenti in modo da "dimezzare" i tempi di esecuzione.</p>
+<p>Per risparmiare tempo di calcolo le ricerce dei percorsi per i due teams sono separate su due processi differenti in modo da "dimezzare" i tempi di esecuzione.</p>
