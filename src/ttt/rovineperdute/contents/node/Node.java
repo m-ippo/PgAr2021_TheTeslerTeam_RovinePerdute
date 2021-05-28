@@ -1,4 +1,4 @@
-package ttt.rovineperdute.contents.graph;
+package ttt.rovineperdute.contents.node;
 
 import ttt.rovineperdute.io.elements.City;
 

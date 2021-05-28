@@ -1,6 +1,6 @@
 package ttt.rovineperdute.contents;
 
-import ttt.rovineperdute.contents.graph.Node;
+import ttt.rovineperdute.contents.node.Node;
 import ttt.rovineperdute.io.ReadXML;
 import ttt.rovineperdute.io.WriteXML;
 import ttt.rovineperdute.io.elements.City;
@@ -20,9 +20,6 @@ import ttt.utils.xml.document.structure.rules.Rules;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.Optional;
 
 public class MenuPrincipale {

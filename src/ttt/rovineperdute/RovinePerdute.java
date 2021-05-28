@@ -10,10 +10,8 @@ import ttt.rovineperdute.io.ReadXML;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 
-import ttt.rovineperdute.contents.graph.Node;
-import ttt.rovineperdute.io.WriteXML;
+import ttt.rovineperdute.contents.node.Node;
 import ttt.rovineperdute.trackresearch.TrackFinder;
 
 /**
