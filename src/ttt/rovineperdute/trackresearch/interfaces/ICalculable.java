@@ -1,4 +1,4 @@
-package ttt.rovineperdute.trackresearch;
+package ttt.rovineperdute.trackresearch.interfaces;
 
 import ttt.rovineperdute.contents.graph.Node;
 

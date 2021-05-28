@@ -4,6 +4,7 @@ import ttt.rovineperdute.io.ReadXML;
 
 import java.util.*;
 import ttt.rovineperdute.contents.graph.Node;
+import ttt.rovineperdute.trackresearch.interfaces.ICalculable;
 
 public class TrackFinder {
 

@@ -1,10 +1,9 @@
 package ttt.rovineperdute.io;
 
 import java.io.File;
-import java.util.ArrayList;
-import ttt.rovineperdute.contents.graph.Node;
 import ttt.rovineperdute.io.elements.Route;
 import ttt.rovineperdute.io.elements.Routes;
+import ttt.rovineperdute.trackresearch.TrackFinder;
 import ttt.utils.xml.document.XMLDocument;
 import ttt.utils.xml.io.XMLWriter;
 
@@ -16,25 +15,25 @@ public class WriteXML {
         this.file = file;
     }
 
-    public void writeXML(ArrayList<Node> path1, ArrayList<Node> path2, Double cost1, Double cost2) {
+    public void writeXML(TrackFinder finder_tonatiuh, TrackFinder finder_metztlih) {
         XMLWriter writer = new XMLWriter(file);
         XMLDocument doc = new XMLDocument(file);
 
         Routes root = new Routes();
         Route team_1 = new Route();
         Route team_2 = new Route();
-        team_1.setCities(path1.size());
-        team_2.setCities(path2.size());
-        team_1.setCost(cost1);
-        team_2.setCost(cost2);
+        team_1.setCities(finder_tonatiuh.getTrack().size());
+        team_2.setCities(finder_metztlih.getTrack().size());
+        team_1.setCost(finder_tonatiuh.getFinalDistance());
+        team_2.setCost(finder_metztlih.getFinalDistance());
         team_1.setTeam("Tonathiu");
         team_2.setTeam("Metztli");
 
-        path1.stream().forEachOrdered(n -> {
+        finder_tonatiuh.getTrack().stream().forEachOrdered(n -> {
             team_1.addSubElement(n.getCity());
         });
 
-        path2.stream().forEachOrdered(n -> {
+        finder_metztlih.getTrack().stream().forEachOrdered(n -> {
             team_2.addSubElement(n.getCity());
         });
 

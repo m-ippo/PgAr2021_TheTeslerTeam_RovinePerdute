@@ -24,6 +24,7 @@ public class ReadXML {
     private List<IXMLElement> city;
 
     private Node end;
+    private Node start;
 
     public ReadXML(File file) {
         this.file = file;
@@ -51,9 +52,9 @@ public class ReadXML {
     public Node putCityInGraph() {
         City campo_base = (City) city.get(0);
         end = new Node((City) city.get(city.size() - 1));
-        Node first = new Node(campo_base);
-        generateNode(first);
-        return first;
+        start = new Node(campo_base);
+        generateNode(start);
+        return start;
     }
 
     /**
@@ -100,10 +101,7 @@ public class ReadXML {
      * @return Documento creato dalla lettura del file.
      */
     public XMLDocument getDocument() {
-        if (doc != null) {
-            return doc;
-        }
-        return null;
+        return doc;
     }
 
     /**
@@ -112,6 +110,10 @@ public class ReadXML {
      */
     public Node getEnd() {
         return end;
+    }
+
+    public Node getStart(){
+        return start;
     }
 
     /**
