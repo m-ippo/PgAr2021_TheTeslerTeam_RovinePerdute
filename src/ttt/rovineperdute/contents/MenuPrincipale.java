@@ -20,6 +20,8 @@ import ttt.utils.xml.document.structure.rules.Rules;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -90,11 +92,18 @@ public class MenuPrincipale {
                 return name.toLowerCase().endsWith(".xml");
             }
         });
-        for(File f : files){
-            menu.addOption(f.getName(), () -> {
-                return f;
+
+        Arrays.stream(files).sorted(new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+                return Long.compare(o1.length(), o2.length());
+            }
+        }).forEachOrdered(file -> {
+            menu.addOption(file.getName(), () -> {
+                return file;
             });
-        }
+        });
+
         File to_ret = menu.showAndWait();
         GeneralFormatter.decrementIndents();
         return to_ret;
