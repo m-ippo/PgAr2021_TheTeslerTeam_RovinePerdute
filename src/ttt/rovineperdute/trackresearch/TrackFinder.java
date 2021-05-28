@@ -59,25 +59,20 @@ public class TrackFinder {
         }
         while (!da_collegare.isEmpty()) {
             Node piu_vicino = null;
-            double min = 0.0;
+            double min = Double.MAX_VALUE;
             for (Node n : da_collegare) {
-                if(min == 0.0 && valori.get(n) != -1){
-                    min = valori.get(n);
-                }
-                if (valori.get(n) != -1 && valori.get(n) - min < THRESHOLD) {
-                    min = valori.get(n);
+                double dist = valori.get(n);
+                if (dist - min < THRESHOLD) {
+                    min = dist;
                     piu_vicino = n;
                 }
             }
-            if (piu_vicino == null) {
-                break;
-            }
-            double dist = 0.0;
+            double dist = valori.get(piu_vicino);
             for (Node n : piu_vicino.getLinks()) {
-                dist = valori.get(piu_vicino) + calculator.calcDistance(n, piu_vicino);
-                if (valori.get(n) == -1 || dist - valori.get(n) < THRESHOLD) {
+                double ricalc = dist + calculator.calcDistance(n, piu_vicino);
+                if (ricalc - valori.get(n) < THRESHOLD) {
                     precedenti.put(n, piu_vicino);
-                    valori.put(n, dist);
+                    valori.put(n, ricalc);
                 }
             }
             da_collegare.remove(piu_vicino);
