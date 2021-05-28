@@ -7,14 +7,30 @@ import ttt.rovineperdute.trackresearch.TrackFinder;
 import ttt.utils.xml.document.XMLDocument;
 import ttt.utils.xml.io.XMLWriter;
 
+/**
+ * Classe per scrivere.
+ *
+ * @author TTT
+ */
 public class WriteXML {
 
     private final File file;
 
+    /**
+     * Inizializza scrittore.
+     *
+     * @param file Il file da scrivere.
+     */
     public WriteXML(File file) {
         this.file = file;
     }
 
+    /**
+     * Scrive il file xml avendo completato la ricerca
+     *
+     * @param finder_tonatiuh Il percorso per il primo team.
+     * @param finder_metztlih Il percorso per il secondo team.
+     */
     public void writeXML(TrackFinder finder_tonatiuh, TrackFinder finder_metztlih) {
         XMLWriter writer = new XMLWriter(file);
         XMLDocument doc = new XMLDocument(file);
