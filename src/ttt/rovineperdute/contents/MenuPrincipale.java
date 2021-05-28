@@ -21,6 +21,7 @@ import ttt.utils.xml.document.structure.rules.Rules;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MenuPrincipale {
 
@@ -58,6 +59,9 @@ public class MenuPrincipale {
                         main.removeOption(main.optionLookup("Stampa il file finale") + 1);
                         main.addOption("Stampa il file finale", () -> {
                             startProcess(first_and_last, reader);
+                            main.reset();
+                            already_put = false;
+                            init();
                             return null;
                         });
                         return null;
@@ -161,11 +165,15 @@ public class MenuPrincipale {
             return Math.abs(to.getCity().getH() - from.getCity().getH());
         });
 
+        AtomicBoolean t_finito = new AtomicBoolean(false);
+        AtomicBoolean m_finito = new AtomicBoolean(false);
+
         Thread thread_t = new Thread(){
             @Override
             public void run(){
 
                 finder_tonatiuh.findTrack();
+                t_finito.set(true);
             }
         };
         Thread thread_m = new Thread(){
@@ -173,15 +181,34 @@ public class MenuPrincipale {
             public void run(){
 
                 finder_metztlih.findTrack();
+                m_finito.set(true);
+            }
+        };
+
+        GeneralFormatter.printOut("Calcolando i percorsi ", false, false);
+
+        Thread dots = new Thread(){
+            @Override
+            public void run(){
+                while (!t_finito.get() || !m_finito.get()){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                    }
+                    System.out.print(". ");
+                }
+                System.out.println();
             }
         };
 
         thread_t.start();
         thread_m.start();
+        dots.start();
 
         try {
             thread_t.join();
             thread_m.join();
+            dots.join();
 
             WriteXML writer = new WriteXML(selectOutputFile());
 
