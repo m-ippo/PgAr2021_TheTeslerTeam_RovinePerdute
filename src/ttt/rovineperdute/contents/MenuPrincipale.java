@@ -72,6 +72,11 @@ public class MenuPrincipale {
         main.paintMenu();
     }
 
+    /**
+     * Ritorna il file tra quelli disonibili nella cartella.
+     * @param directory La cartella in cui scegliere il file.
+     * @return File scelto dalla cartella.
+     */
     private File selectFile(File directory){
         GeneralFormatter.incrementIndents();
         Menu<File> menu = new Menu<File>("Seleziona il file.") {};
@@ -91,6 +96,11 @@ public class MenuPrincipale {
         return to_ret;
     }
 
+    /**
+     * Ritorna il lettore per leggere il file XML.
+     * @param file File da leggere.
+     * @return Lettore.
+     */
     private ReadXML readFileXML(File file){
         ReadXML reader = new ReadXML(file);
         Structure st = new Structure();
@@ -104,6 +114,11 @@ public class MenuPrincipale {
         return reader;
     }
 
+    /**
+     * Ritorna il nodo di partenza e di fine.
+     * @param reader Lettore.
+     * @return Coppia con i nodi di partenza e fine.
+     */
     private Pair<Node, Node> getStartAndEndNode(ReadXML reader){
         GeneralFormatter.incrementIndents();
         Menu<Pair<Node, Node>> node_menu = new Menu<Pair<Node, Node>>("Seleziona nodi di partenza e arrivo.") {};
@@ -133,6 +148,11 @@ public class MenuPrincipale {
         return to_ret;
     }
 
+    /**
+     * Metodo che cerca i percorsi migliori per i veicoli e crea il file di output.
+     * @param first_and_last Nodo di partenza e di fine.
+     * @param reader Lettore.
+     */
     private void startProcess(Pair<Node, Node> first_and_last, ReadXML reader){
         TrackFinder finder_tonatiuh  = new TrackFinder(first_and_last.getKey(), first_and_last.getValue(), reader, (to, from) -> {
             return Math.sqrt(Math.pow(from.getCity().getX() - to.getCity().getX(), 2) + Math.pow(from.getCity().getY() - to.getCity().getY(), 2));
@@ -171,6 +191,10 @@ public class MenuPrincipale {
         }
     }
 
+    /**
+     * Ritorna il file scelto per salvare i percorsi migliori.
+     * @return File di output.
+     */
     private File selectOutputFile(){
         Optional<String> str = ConsoleInput.getInstance().readString("Inserisci il nome del file di output : ",
                 false, null, (string) -> {

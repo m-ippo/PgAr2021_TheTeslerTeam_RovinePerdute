@@ -128,6 +128,10 @@ public class ReadXML {
         return end;
     }
 
+    /**
+     * Ritorna il nodo di partenza (il campo base)
+     * @return Nodo di partenza.
+     */
     public Node getStart(){
         return start;
     }
