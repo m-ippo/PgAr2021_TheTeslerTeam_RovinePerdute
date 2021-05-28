@@ -3,6 +3,11 @@
 
 ### Funzionalità presenti
 Viene richiesto il percorso alla cartella contenente i file XML. I file sono elencati per dimensione e quando vengono caricati viene controllata la struttura del file che deve seguire la seguente struttura:
+```java
+  StructureModule module = new StructureModule(Map.class, Rules.ONE)
+                .addModule(new StructureModule(City.class, Rules.ONE_TO_INFINITE)
+                        .addModule(new StructureModule(Link.class, Rules.ZERO_TO_INFINITE)));
+```
   >Un solo elemento "map" che contiene da 1 a N elementi "city" che a loro volta contengono da 0 a N elementi "link"
 
 Il controllo della struttura allunga il tempo di caricamento di un file di qualche secondo. 
