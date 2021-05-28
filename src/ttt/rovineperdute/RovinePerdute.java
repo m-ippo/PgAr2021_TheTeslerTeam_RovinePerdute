@@ -53,7 +53,7 @@ public class RovinePerdute {
     }
 
     public static TrackFinder teamMetztli() {
-        File f = new File("PgAr_Map_5.xml");
+        File f = new File("cinque.xml");
         ReadXML r = new ReadXML(f);
         Node n = r.putCityInGraph();
         TrackFinder t = new TrackFinder(n, r.getEnd(), r, (to, from) -> {

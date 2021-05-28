@@ -9,17 +9,20 @@ import ttt.utils.xml.engine.interfaces.IXMLElement;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import ttt.rovineperdute.contents.graph.Node;
+import ttt.utils.xml.io.XMLReader;
 
 public class ReadXML {
 
     private final XMLDocument doc;
     private final File file;
+    private final InputStream stream;
     private final HashMap<Integer, Node> gia_letti = new HashMap<>();
     private List<IXMLElement> city;
 
@@ -28,6 +31,14 @@ public class ReadXML {
 
     public ReadXML(File file) {
         this.file = file;
+        this.stream = null;
+        doc = new XMLDocument(null);
+        readDocument();
+    }
+
+    public ReadXML(InputStream stream) {
+        this.file = null;
+        this.stream = stream;
         doc = new XMLDocument(null);
         readDocument();
     }
@@ -37,7 +48,12 @@ public class ReadXML {
      */
     private void readDocument() {
         try { // lettura xml
-            XMLEngine engine = new XMLEngine(file, ttt.rovineperdute.io.elements.Map.class, City.class, Link.class);
+            XMLEngine engine;
+            if(file != null){
+              engine = new XMLEngine(file, ttt.rovineperdute.io.elements.Map.class, City.class, Link.class);
+            } else {
+                engine = new XMLEngine(new XMLReader(stream), ttt.rovineperdute.io.elements.Map.class, City.class, Link.class);
+            }
             engine.morph(doc);
             city = doc.getRoot().getElements();
         } catch (IOException e) {

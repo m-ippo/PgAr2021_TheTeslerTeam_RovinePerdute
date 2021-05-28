@@ -20,6 +20,9 @@ import ttt.utils.xml.document.structure.rules.Rules;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Optional;
 
 public class MenuPrincipale {
@@ -29,6 +32,7 @@ public class MenuPrincipale {
                                 .addModule(new StructureModule(City.class, Rules.ONE_TO_INFINITE)
                                         .addModule(new StructureModule(Link.class, Rules.ZERO_TO_INFINITE)));
     private boolean already_put = false;
+    private static final char[] ILLEGAL_CHARACTERS = { '/', '\n', '\r', '\t', '\0', '\f', '`', '?', '*', '\\', '<', '>', '|', '\"', ':' };
 
     public MenuPrincipale(){
         main = new Menu<Void>("Andiamo alle rovine perdute!!!") {};
@@ -136,13 +140,56 @@ public class MenuPrincipale {
         TrackFinder finder_tonatiuh  = new TrackFinder(first_and_last.getKey(), first_and_last.getValue(), reader, (to, from) -> {
             return Math.sqrt(Math.pow(from.getCity().getX() - to.getCity().getX(), 2) + Math.pow(from.getCity().getY() - to.getCity().getY(), 2));
         });
-        finder_tonatiuh.findTrack();
         TrackFinder finder_metztlih  = new TrackFinder(first_and_last.getKey(), first_and_last.getValue(), reader, (to, from) -> {
             return Math.abs(to.getCity().getH() - from.getCity().getH());
         });
-        finder_metztlih.findTrack();
-        WriteXML writer = new WriteXML(new File("output.xml"));
-        writer.writeXML(finder_tonatiuh, finder_metztlih);
+
+        Thread thread_t = new Thread(){
+            @Override
+            public void run(){
+
+                finder_tonatiuh.findTrack();
+            }
+        };
+        Thread thread_m = new Thread(){
+            @Override
+            public void run(){
+
+                finder_metztlih.findTrack();
+            }
+        };
+
+        thread_t.start();
+        thread_m.start();
+
+        try {
+            thread_t.join();
+            thread_m.join();
+
+            WriteXML writer = new WriteXML(selectOutputFile());
+
+            writer.writeXML(finder_tonatiuh, finder_metztlih);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private File selectOutputFile(){
+        Optional<String> str = ConsoleInput.getInstance().readString("Inserisci il nome del file di output : ",
+                false, null, (string) -> {
+            char[] to_char = string.toCharArray();
+            for(int i = 0; i < string.length(); i++){
+                for(int j = 0; j < to_char.length; j++){
+                    if(string.charAt(i) == ILLEGAL_CHARACTERS[j]){
+                        throw new IllegalArgumentException("Il nome non è valido.");
+                    }
+                }
+            }
+        });
+        if(str.get().endsWith(".xml")){
+            return new File(str.get());
+        };
+        return new File(str.get() + ".xml");
     }
 
 }
