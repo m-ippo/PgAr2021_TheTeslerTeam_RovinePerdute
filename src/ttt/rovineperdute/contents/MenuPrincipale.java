@@ -1,6 +1,6 @@
 package ttt.rovineperdute.contents;
 
-import ttt.rovineperdute.contents.node.Node;
+import ttt.rovineperdute.contents.graph.Node;
 import ttt.rovineperdute.io.ReadXML;
 import ttt.rovineperdute.io.WriteXML;
 import ttt.rovineperdute.io.elements.City;

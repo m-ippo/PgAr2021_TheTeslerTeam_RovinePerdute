@@ -18,7 +18,7 @@ package ttt.rovineperdute.contents.trash;
 import ttt.rovineperdute.contents.trash.waterfall.GraphPath;
 import java.util.LinkedHashMap;
 import java.util.List;
-import ttt.rovineperdute.contents.node.Node;
+import ttt.rovineperdute.contents.graph.Node;
 
 /**
  *

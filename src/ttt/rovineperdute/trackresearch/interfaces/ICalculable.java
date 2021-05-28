@@ -1,6 +1,6 @@
 package ttt.rovineperdute.trackresearch.interfaces;
 
-import ttt.rovineperdute.contents.node.Node;
+import ttt.rovineperdute.contents.graph.Node;
 
 public interface ICalculable {
 

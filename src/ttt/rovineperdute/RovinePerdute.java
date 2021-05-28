@@ -10,8 +10,10 @@ import ttt.rovineperdute.io.ReadXML;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 
-import ttt.rovineperdute.contents.node.Node;
+import ttt.rovineperdute.contents.graph.Node;
+import ttt.rovineperdute.io.WriteXML;
 import ttt.rovineperdute.trackresearch.TrackFinder;
 
 /**
@@ -28,12 +30,6 @@ public class RovinePerdute {
     public static void main(String[] args) {
 
         MenuPrincipale mp = new MenuPrincipale();
-
-//        TrackFinder tf1 = teamTonatiuh();
-//        TrackFinder tf2 = teamMetztli();
-//        WriteXML w = new WriteXML(new File("output.xml"));
-//        w.writeXML(tf1.getTrack(), tf2.getTrack(), tf1.getFinalDistance(), tf2.getFinalDistance());
-        System.out.println(memoryUsed() / 1000000 + "MB");
     }
 
     public static TrackFinder teamTonatiuh() {

@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
-import ttt.rovineperdute.contents.node.Node;
+import ttt.rovineperdute.contents.graph.Node;
 import ttt.utils.xml.io.XMLReader;
 
 public class ReadXML {
