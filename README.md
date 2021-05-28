@@ -49,4 +49,9 @@ La raccolta dei seguenti dati è stata eseguita solamente con il file di 10.000 
 <p>Per risparmiare tempo di calcolo le ricerce dei percorsi per i due teams sono separate su due processi differenti in modo da "dimezzare" i tempi di esecuzione.</p>
 
 ### Diagramma UML
-Il diagramma delle classi non è stato caricato poichè solamente 3 classi sono effettivamente usate nel progetto...
+Il diagramma delle classi non è stato caricato poichè solamente 5 classi sono effettivamente usate nel progetto... :
+  * Node
+  * TrackFinder
+  * ReadXML
+  * WriteXML
+  * MenuPrincipale
